@@ -11,14 +11,15 @@
     <meta charset="UTF-8">
     <title>魔豆路由器认证</title>
 
-    <script src="js/jquery-1.12.0.js"></script>
+    <!--<script src="js/jquery-1.12.0.js"></script>-->
+    <script type="text/javascript" src="http://static.51y5.net/js/zepto-1.0.0.min.js"></script>
     <style type="text/css">
         *{
             margin: 0;
             padding: 0;
         }
         html{
-            font-family: arial,helvetica,sans-serif;
+            font-family: "Microsoft Yahei",arial,helvetica,sans-serif;
             -webkit-text-size-adjust:none;
         }
 
@@ -74,11 +75,16 @@
             width: 21px;
             vertical-align: middle;
         }
+        .loading{
+            display: inline;
+            margin: 9px 0.7em;
+
+        }
     </style>
 </head>
 <body>
     <article class="container">
-        <img class="pic" src="images/autentication.png">
+        <img class="pic" src="images/authentication.png">
 
         <div class="text">
             钥匙一键认证，是针对WiFi万能钥匙联盟的合作热点，为WiFi万能钥匙的注册用户提供一键登录的功能，免除短信认证，上网更加快捷。
@@ -97,18 +103,23 @@
         $(".btn").click(function(){
             if(!$(this).hasClass("disabled")){
                 $(this).addClass("disabled");
-                $(".loading-pic").show();
+                $(".loading-pic").addClass("loading").animate({transform:'rotate(400000deg)'},"600000");
+//                roll();
+//                function roll(){
+//                    $(".loading-pic").animate({transform:'rotate(180deg)'},roll);
+//                }
+
 
 
 //                var resp=1;//获取认证结果
 //                $(this).hide(0);
-                if(resp){
+                if(resp==1){
                     $(".pic").attr("src","images/success.png").css("width","140px");
 
                     $(".text").html("<span class='success'>认证成功！恭喜你可以免费上网了</span>还有3秒自动跳转到商家页面")
                 }else{
-                    $(".pic").attr("src","images/fail.png").css("width","140px").html("认证失败，建议您退出当前页面，重新进行认证").addClass("fail");
-
+                    $(".pic").attr("src","images/fail.png").css("width","140px");
+                    $(".text").html("认证失败，建议您退出当前页面，重新进行认证").addClass("fail");
                 }
 
 
