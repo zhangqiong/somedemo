@@ -46,7 +46,7 @@
             color: #02c060;
             font-size: 18px;
         }
-        .text.fail{
+        .fail{
             font-size: 18px;
             line-height: 28px;
         }
@@ -100,17 +100,15 @@
                 $(".loading-pic").show();
 
 
-                var resp=1;//获取认证结果
-                $(this).hide(0);
+//                var resp=1;//获取认证结果
+//                $(this).hide(0);
                 if(resp){
-                    $(".pic").attr("src","images/success.png");
-                    $(".pic").css("width","140px");
+                    $(".pic").attr("src","images/success.png").css("width","140px");
+
                     $(".text").html("<span class='success'>认证成功！恭喜你可以免费上网了</span>还有3秒自动跳转到商家页面")
                 }else{
-                    $(".pic").attr("src","images/fail.png");
-                    $(".pic").css("width","140px");
-                    $(".text").html("认证失败，建议您退出当前页面，重新进行认证");
-                    $(".text").addClass("fail");
+                    $(".pic").attr("src","images/fail.png").css("width","140px").html("认证失败，建议您退出当前页面，重新进行认证").addClass("fail");
+
                 }
 
 
