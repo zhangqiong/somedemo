@@ -67,25 +67,57 @@
             cursor: pointer;
 
         }
-        /*.btn span{*/
-            /*display: block;*/
-            /*height: 40px;*/
-            /*line-height: 40px;*/
-        /*}*/
+        .btn .wraper{
+            width:100px;
+            height:40px;
+            margin: auto;
+
+        }
+        .btn span{
+            float: left;
+            display: block;
+            height: 40px;
+            line-height: 40px;
+        }
         .disabled{
             background-color: #ccc;
         }
         .loading-pic{
+            float: left;
             display: none;
             width: 21px;
             vertical-align: middle;
+            -webkit-animation: rotate 1s linear infinite;
+            -o-animation: rotate 1s linear infinite;
+            animation: rotate 1s linear infinite;
         }
         .loading{
-            display: inline;
-            /*float: left;*/
-
+            display: block;
             margin: 9px 0.4em;
 
+        }
+        .clear{
+            clear: both;
+        }
+        @keyframes rotate{
+            0% {
+              -webkit-transform: rotate(0);
+              transform: rotate(0);
+            }
+            100% {
+              -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+            }
+        }
+        @-webkit-keyframes rotate{
+            0% {
+              -webkit-transform: rotate(0);
+              transform: rotate(0);
+            }
+            100% {
+              -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -98,41 +130,35 @@
         </div>
 
         <div class="btn">
-            <img src="images/loading.png" class="loading-pic">
-            <span>钥匙一键认证</span>
+            <div class="wraper">
+                <img src="images/loading.png" class="loading-pic">
+                <span>钥匙一键认证</span>
+                <div class="clear"></div>
+            </div>
         </div>
     </article>
 
     <script>
-//        $(document).ready(function(){
-//
-//        });
-        $(".btn").click(function(){
-            if(!$(this).hasClass("disabled")){
-                $(this).addClass("disabled");
-                $(".loading-pic").addClass("loading").animate({transform:'rotate(400000deg)'},"600000");
-//                roll();
-//                function roll(){
-//                    $(".loading-pic").animate({transform:'rotate(180deg)'},roll);
-//                }
-
-
-
-//                var resp=2;//获取认证结果
-//                $(this).hide(0);
-                if(resp==1){
-                    $(".pic").attr("src","images/success.png").css("width","140px");
-
-                    $(".text").html("<span class='success'>认证成功！恭喜你可以免费上网了</span>还有3秒自动跳转到商家页面")
-                }else{
-                    $(".pic").attr("src","images/fail.png").css("width","140px");
-                    $(".text").html("认证失败，建议您退出当前页面，重新进行认证").addClass("fail");
+       $(document).ready(function(){
+            $(".btn").click(function(){
+                if(!$(this).hasClass("disabled")){
+                    $(this).addClass("disabled");
+                    $(".loading-pic").addClass("loading");
+                    $(".btn .wraper").css("width","130px");
                 }
+            });
+       });
+        
+        function result(resp){
+            if(resp==1){
+                $(".pic").attr("src","images/success.png").css("width","140px");
 
-
+                $(".text").html("<span class='success'>认证成功！恭喜你可以免费上网了</span>还有3秒自动跳转到商家页面");
+            }else{
+                $(".pic").attr("src","images/fail.png").css("width","140px");
+                $(".text").html("认证失败，建议您退出当前页面，重新进行认证").addClass("fail");
             }
-
-        });
+        }
     </script>
 </body>
 </html>
