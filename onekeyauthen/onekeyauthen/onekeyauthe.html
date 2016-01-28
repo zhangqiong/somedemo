@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+
+    <meta charset="UTF-8">
+    <title>魔豆路由器认证</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            font-family: "Microsoft Yahei",arial,helvetica,sans-serif;
+            -webkit-text-size-adjust:none;
+        }
+
+        /*图片*/
+        .pic{
+            display: block;
+            width: 270px;
+            height:100px;
+            margin: 116px auto 30px auto;
+            background-image: url(images/authentication.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+        }
+        .success .pic{
+            background-image: url(images/success.png);
+            width: 140px;
+        }
+        .fail .pic{
+            background-image: url(images/fail.png);
+            width: 140px;
+        }
+        /*文字*/
+        .text{
+
+            width: 82%;
+            margin: auto;
+
+            font-size: 12px;
+            color: #999;
+            line-height: 18px;;
+            text-align: center;
+        }
+        .success span{
+            display: block;
+            margin-bottom: 11px;;
+            color: #02c060;
+            font-size: 18px;
+        }
+        .fail .text,.success .text{
+            font-size: 18px;
+            line-height: 28px;
+        }
+
+        /*按钮*/
+        .btn{
+            width: 82%;
+            height: 40px;
+            margin: 40px auto;
+            background-color: #0285f0;
+            border-radius: 20px;
+
+            text-align: center;
+            color: #fff;
+            font-size: 15px;
+            line-height: 40px;
+            cursor: pointer;
+
+        }
+        .fail .btn,.success .btn{display: none;}
+        .btn .wraper{
+            width:100px;
+            height:40px;
+            margin: auto;
+
+        }
+        .btn span{
+            float: left;
+            display: block;
+            height: 40px;
+            line-height: 40px;
+        }
+        .disabled .btn{
+            background-color: #ccc;
+        }
+        .loading-pic{
+            float: left;
+            display: none;
+            width: 21px;
+            vertical-align: middle;
+            -webkit-animation: rotate 1s linear infinite;
+            -o-animation: rotate 1s linear infinite;
+            animation: rotate 1s linear infinite;
+        }
+        .disabled .loading-pic{
+            display: block;
+            margin: 9px 0.4em;
+        }
+        .disabled .wraper{
+            width:130px;
+        }
+
+        .clear{
+            clear: both;
+        }
+        @keyframes rotate{
+            0% {
+              -webkit-transform: rotate(0);
+              transform: rotate(0);
+            }
+            100% {
+              -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+            }
+        }
+        @-webkit-keyframes rotate{
+            0% {
+              -webkit-transform: rotate(0);
+              transform: rotate(0);
+            }
+            100% {
+              -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <article class="container">
+        <div class="pic"></div>
+        <div class="text">
+            钥匙一键认证，是针对WiFi万能钥匙联盟的合作热点，为WiFi万能钥匙的注册用户提供一键登录的功能，免除短信认证，上网更加快捷。
+        </div>
+
+        <div class="btn" id="btn">
+            <div class="wraper">
+                <img src="images/loading.png" class="loading-pic">
+                <span>钥匙一键认证</span>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </article>
+
+    <script>
+        (function(){
+            document.querySelector(".btn").onclick=function(){
+                var _container = document.querySelector(".container");
+                if(_container.className.indexOf("disabled")<0){
+                    _container.className = 'container disabled';
+                }else{
+                    return;
+                }
+            };
+        })();
+        
+        function result(resp){
+            var _text = document.querySelector('.text'),
+                _btn = document.querySelector(".btn"),
+                _pic = document.querySelector(".pic")
+                _container = document.querySelector(".container");
+            switch(resp){
+                case 1 ://成功
+                    _text.innerHTML = "<span class='success'>认证成功！恭喜你可以免费上网了</span>还有3秒自动跳转到商家页面";
+                    _container.className = "container success";
+                    break;
+                case 2 ://失败
+                    _text.innerHTML = '认证失败，建议您退出当前页面，重新进行认证';
+                    _container.className = "container fail";
+                    break;
+                case 3 ://还原
+                    _container.className = 'container';
+                    _text.innerHTML = "钥匙一键认证，是针对WiFi万能钥匙联盟的合作热点，为WiFi万能钥匙的注册用户提供一键登录的功能，免除短信认证，上网更加快捷。";
+                    break;
+            }
+            _text = null;
+            _btn  = null;
+            _container = null;
+        }
+    </script>
+</body>
+</html>
