@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>自动隐藏顶部栏</title>
-	<script src="js/headroom.js"></script>
+	<!-- // <script src="js/headroom.js"></script> -->
 	<style type="text/css">
 		*{
 			margin:0;
@@ -33,7 +33,7 @@
 			transition: transform 200ms linear;
 		}
 		.headroom--pinned{
-			display: block;
+			/*display: block;*/
 			transform:translateY(0%);
 		}
 		.headroom--unpinned{
@@ -53,9 +53,23 @@
 		</ul>
 	</header>
 	<script>
+	
+
+	function Headroom(){
+		
+	}
+	Headroom.prototype={
+		getScrollY:function(){
+			if(window.pageYOffset!==undefined)return window.pageYOffset;
+			else 
+				// if(document.body.scroolTop)
+				return document.body.scroolTop; 
+		}
+	}
 	var header=document.querySelector('header');
 	var headroom=new Headroom(header);
-	headroom.init();
+	// headroom.init();
+	console.log(headroom.getScrollY());
 	</script>
 </body>
 </html>
