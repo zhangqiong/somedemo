@@ -31,9 +31,13 @@
 	}
 	select,
 	button{
+		min-width: 3em;
 		font-size: .5rem;
 		border-radius: .5em;
-
+	
+	}
+	optgroup{
+		border-radius: .5em;
 	}
 	.animated{
 		position: relative;
@@ -53,7 +57,7 @@
 			
 		}
 		20%,40%,60%,80%{
-			top:20px;
+			top:-20px;
 
 		}
 		
@@ -63,7 +67,7 @@
 			top:0;
 		}
 		20%,40%,60%,80%{
-			top:20px;
+			top:-20px;
 		}
 		
 	}
@@ -177,21 +181,56 @@
 		}
 
 	}
+	.tada{
+		-webkit-animation-name:tada;
+		animation-name:tada;
+	}
+	@-webkit-keyframes tada{
+		from,to{
+			-webkit-transform: scale3D(1,1,1);
+		}
+		10%,20%{
+			-webkit-transform:scale3D(.9,.9,.9) rotate3D(0,0,1,-3deg);
+		}
+		30%,50%,70%,90%{
+			-webkit-transform:scale3D(1.1,1.1,1.1) rotate3D(0,0,1,3deg);
+		}
+		40%,60%,80%{
+			-webkit-transform:scale3D(1.1,1.1,1.1) rotate3D(0,0,1,-3deg);
+		}
+	}
+	@keyframes tada{
+		from,to{
+			transform: scale3D(1,1,1);
+		}
+		10%,20%{
+			transform:scale3D(.9,.9,.9) rotate3D(0,0,1,-3deg);
+		}
+		30%,50%,70%,90%{
+			transform:scale3D(1.1,1.1,1.1) rotate3D(0,0,1,3deg);
+		}
+		40%,60%,80%{
+			transform:scale3D(1.1,1.1,1.1) rotate3D(0,0,1,-3deg);
+		}
+	}
 	</style>
 </head>
 <body>
 <div class="wraper">
 	<h1 class="animated">animate</h1>
-	<button type="button">开始</button>
-	<select name="chose" id="select">
-		
-		<option value="flash">flash</option>
-		<option value="pulse">pulse</option>
-		<option value="color">color</option>
-		<option value="bounce">bounce</option>
-		<option value="swing">swing</option>
-	</select>
 	
+	<select name="chose" id="select">
+		<optgroup label="attention seekers">
+			<option value="flash">flash</option>
+			<option value="pulse">pulse</option>
+			<option value="color">color</option>
+			<option value="bounce">bounce</option>
+			<option value="swing">swing</option>
+			<option value="tada">tada</option>
+		</optgroup>
+		
+	</select>
+	<button type="button">开始</button>
 </div>
 <script type="text/javascript">
 	var height;
