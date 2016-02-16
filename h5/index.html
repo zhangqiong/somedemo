@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	iframe{
+		/*border:0;
+		iframeborder:0;*/
+		width:700px;
+		display: block;
+		margin: 20px 0;
+	}
+	</style>
+</head>
+<body>
+	<iframe src="A/1.html"></iframe>
+	<iframe src="A/2.html"></iframe>
+	<iframe src="A/3.html"></iframe>
+	<iframe src="A/4.html"></iframe>
+	<iframe src="A/5.html"></iframe>
+	<iframe src="A/6.html"></iframe>
+	<iframe src="A/7.html"></iframe>
+	<iframe src="B/1.html"></iframe>
+	<iframe src="B/2.html"></iframe>
+	<iframe src="B/3.html"></iframe>
+	<iframe src="B/4.html"></iframe>
+	<iframe id="C1" src="C/1.html" onload="this.height=C1.contentDocument.body.clientHeight" ></iframe>
+	<iframe id="C2" src="C/2.html"  onload="this.height=C2.contentDocument.body.scrollHeight"></iframe>
+	<script type="text/javascript">
+	// function setHeight(){
+	// 	var C1=document.getElementById("C1");
+	// 	var C2=document.getElementById("C2");
+	// 	var offsetHeight=C1.contentDocument.body.offsetHeight;
+	// 	var scrollHeight=C1.contentDocument.body.scrollHeight;
+	// 	var clientHeight=C1.contentDocument.body.clientHeight;
+	// 	console.log(offsetHeight);
+	// 	console.log(scrollHeight);
+	// 	console.log(clientHeight);
+	// }
+	// window.onload=setHeight;
+	</script>
+</body>
+</html>
