@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/jquery-1.12.0.js"></script>
+	<style type="text/css">
+		.hint{
+			/*position: absolute;*/
+			display: inline-block;
+			max-width:100px;
+			font-size: 0.7em;
+			border-radius: 5px;
+			border: 1px solid;
+		}
+		.error{
+			background-color: rgba(188,0,0,0.3);
+			color: red;
+			
+		}
+		input{
+			margin: 2em;
+		}
+	</style>
+</head>
+<body>
+	<form id="f1" class="fo">
+		not_null:<input type="text" not_null="y"><br>
+		最少5:<input type="text" min="5"><br>
+		最多5:<input type="text" max="5"><br>
+		email:<input type="text" email="y"><br>
+
+	</form>
+	<script> 
+
+	$.fn.extend({
+		hint:{
+			not_null:"不能为空",
+			max:"注意字数限制",
+			min:"注意字数限制",
+			email:"请输入正确的邮箱"
+		},
+		rule:{
+			email:/^\w+([-.]\w+)*@\w+([-.]\w+)*\.\w{2,4}$/,
+
+		}
+
+		,
+		valid:function(){
+			$(this).not_null();
+			$(this).min();
+			$(this).max();
+			$(this).hide_error();
+			$(this).email();
+		},
+		not_null:function(){
+			$(this).children("[not_null='y']").each(
+					function(){
+						$(this).blur(
+							function(){
+								if($(this).val()!=""){
+									// console.log("not_null");
+									return true;
+								}
+								else{
+									// console.log("null");
+									// console.log($(this).hint["not_null"]);
+									// console.log(this);
+									// console.log($(this));
+									$(this).show_error("not_null");
+									return false;
+								} 
+							}
+						);
+					}
+				);
+		}
+		,
+		min:function(){
+			$(this).children("[min]").each(
+				function(){
+					$(this).blur(
+					function(){
+						var min_val=$(this).attr("min");
+						// console.log(min_val);
+						if($(this).val().length<min_val){
+							// console.log("<",min_val);
+							$(this).show_error("min");
+							return false;
+						}
+						else{
+							// console.log("OK>=",min_val);
+							
+							return true;
+						} 
+					}
+					);
+				}
+				);
+		},
+		max:function(){
+			$(this).children("[max]").each(
+				function(){
+					$(this).blur(
+							function(){
+								var max_val=$(this).attr("max");
+								// console.log(max_val);
+								if($(this).val().length>max_val){
+									// console.log(">",max_val);
+									$(this).show_error("max");
+									return false;
+								}else{
+									// console.log("OK<=",max_val);
+
+									return true;
+								}
+							}
+						);
+				}
+
+					
+				);
+		},
+		email:function(){
+			$(this).children("[email='y']").each(
+					function(){$(this).blur(
+							function(){
+								if($(this).rule["email"].test($(this).val())){
+									// console.log("邮箱");
+									return true;
+								}else{
+									$(this).show_error("email");
+									// console.log("邮箱错误");
+									return false;
+								}
+							}
+						);}
+				);
+		},
+		show_error:function(type){
+			
+			// console.log($(this));
+			// var top=$(this).offset().top+20;
+			// var left=$(this).offset().left;
+			// console.log($(this).offset(),top,left);
+			if($(this).next(".error")[0]==null){
+				$("<div></div>").html($(this).hint[type]).addClass("hint error").insertAfter($(this));
+			}
+			
+		},
+		hide_error:function(){
+			$(this).children("input").each(
+					function(){
+						$(this).click(
+								function(){
+									// console.log($(this).next(".hint"));
+									if($(this).next(".hint")[0]!=null){
+										// console.log($(this).next(".hint")[0]);
+										$(this).next(".hint").remove();
+									}
+								}
+							);
+					}
+				);
+		}
+	}
+		);
+	
+	$("form").valid();
+	</script>
+</body>
+</html>
