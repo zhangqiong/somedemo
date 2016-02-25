@@ -5,9 +5,32 @@
 	<title>一个简单的表单验证</title>
 	<script src="js/jquery-1.12.0.js"></script>
 	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+
+		}
+		.container{
+			padding: 20px;
+		}
+		input{
+
+			border-radius: 15px;
+			margin: 20px;
+			padding:7px;
+			outline: 0;
+		}
+		label{
+			display: inline-block;
+			width: 7em;
+			font-weight: bold;
+		}
 		.hint{
 			/*position: absolute;*/
 			display: inline-block;
+			width: auto;
 			max-width:100px;
 			font-size: 0.7em;
 			border-radius: 5px;
@@ -18,19 +41,20 @@
 			color: red;
 			
 		}
-		input{
-			margin: 2em;
-		}
+		
 	</style>
 </head>
 <body>
+<div class="container">
 	<form id="f1" class="fo">
-		not_null:<input type="text" not_null="y"><br>
-		最少5:<input type="text" min="5"><br>
-		最多5:<input type="text" max="5"><br>
-		email:<input type="text" email="y"><br>
+		<label>not_null:</label><input type="text" not_null="y"><br>
+		<label>最少5:</label><input type="text" min="5"><br>
+		<label>最多5:</label><input type="text" max="5"><br>
+		<label>email:</label><input type="text" email="y"><br>
 
 	</form>
+</div>
+	
 	<script> 
 
 	$.fn.valid=function(hint){
