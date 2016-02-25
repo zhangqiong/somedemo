@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>轮播图</title>
 	<script src="js/jquery-1.12.0.js"></script>
 	<style>
 		*{
@@ -59,12 +59,18 @@
 			color: white;
 			font-weight: 900;
 			font-size: 3rem;	
-			padding:0 20px;
+			padding:20% 20px;
 			cursor: pointer;
+		}
+		.carousel-lt span,
+		.carousel-gt span{
+			position: relative;
+			top:-20px;
 		}
 		.carousel-lt:hover,
 		.carousel-gt:hover{
 			background-color: rgba(30,30,30,0.1);
+
 		}
 		.carousel-lt{
 			left: 0;
@@ -140,8 +146,8 @@
 					);
 				this.$points.eq(this.active_index).addClass("active");
 				this.$ele.append($points_wrapper);
-			this.$buttonL=$('<div class="carousel-lt">&lt;</div>');
-			this.$buttonR=$('<div class="carousel-gt">&gt;</div>');
+			this.$buttonL=$('<div class="carousel-lt"><span>&lt;</span></div>');
+			this.$buttonR=$('<div class="carousel-gt"><span>&gt;</span></div>');
 
 				this.$ele.append(this.$buttonL,this.$buttonR);
 				// console.log(this.$buttons.eq(0));
