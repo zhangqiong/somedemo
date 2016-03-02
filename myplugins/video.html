@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>视频播放</title>
+	<style type="text/css">
+	*{
+		margin:0;
+		padding:0;
+	}
+	.play_v{
+		font-size: 0;
+	}
+		div,video,object,embed{
+			width: 100%;
+			height: 100%;
+		}
+		.controls{
+			width: auto;
+			height: 20px;
+			background-color: rgba(0,0,0,0.1);
+			padding-top: 1px;
+			line-height: 20px;
+			font-size: 17px;
+		}
+		.start-pause,
+		.end{
+			float: left;
+			margin-left: 10px;
+			z-index: 1000;
+		}
+		.progress{
+			box-sizing: border-box;
+			position: relative;
+			width: 100%;
+			height: 10px;
+			padding: 0 100px;
+			margin: 4px 0 5px;
+			background-color: #ccc;
+			background-clip: content-box;
+		}
+		.inner-progress{
+
+			width: 0;
+			height: 10px;
+			background-color: orange;
+			z-index: 100;
+		}
+		.load-progress{
+			width: 0;
+			max-width: 100%;
+			height: 10px;
+			position: absolute;
+			top:0;
+			left: 0;
+			background-color: #aaa;
+		}
+		.time{
+			display: inline;
+			width: auto;
+			float: right;
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+<div class="play_v">
+	<video controls="controls">
+		<source src="video/langyabang_18.mp4" type="video/mp4">
+		<source src="video/langyabang_18.ogv" type="video/ogg">
+		<source src="video/langyabang_18.webm" type="video/webm">
+		<object data="video/langyabang_18.mp4">
+			<embed src="video/langyabang_18.mp4" />
+		</object>
+	</video><div class="controls">
+			
+			<button class="start-pause" type="button">开始</button>
+			<button class="end" type="button">停止</button>
+			
+			<div class="time">00:00:00</div>
+			<div class="progress">
+				<div class="inner-progress"></div>
+				<div class="load-progress"></div>
+			</div>
+		</div>
+</div>
+	<script>
+		(function(){
+			var video=document.querySelector("video");
+			var start_pause=document.querySelector(".start-pause");
+			var end=document.querySelector(".end");
+			var time=document.querySelector(".time");
+			var inner_progress=document.querySelector(".inner-progress");
+			var interval=null;
+			var load_progress=document.querySelector(".load-progress");
+			video.removeAttribute("controls"); 
+			end.onclick=function(){
+				video.pause();
+				start_pause.innerHTML="开始";
+				clearInterval(interval);
+				video.currentTime=0;
+				update();
+			};
+			
+			var start_pause_f=function (){
+				console.log(video);
+				// console.log(video.paused);
+				if(video.paused){
+					video.play();
+					this.innerHTML="暂停";
+					init();
+					// is_playing=false;
+				}else{
+					video.pause();
+					this.innerHTML="开始";
+					clearInterval(interval);
+					// is_playing=true;
+				}
+				
+			};
+
+			start_pause.onclick=start_pause_f;
+			console.log(video);
+			var update=function (){
+				var c_time=video.currentTime;
+				time.innerHTML=changeTime(c_time);
+				inner_progress.style.width=c_time/video.duration*100+"%";
+				load_progress.style.width=video.buffered.end(0)/video.duration*100+"%";
+				console.log(video.buffered);
+			};
+			var init=function(){
+				interval=window.setInterval(update,1000);
+			}
+			function changeTime(s){
+				// console.log(s);
+				// var r=;
+				// console.log(r);
+				return Math.floor(s/3600)+":"+Math.floor(s%3600/60)+":"+Math.floor(s%60);
+			};
+			init();
+		})();
+	</script>
+</body>
+</html>
