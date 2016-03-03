@@ -9,14 +9,20 @@
 		padding:0;
 	}
 	.play_v{
+		position: relative;
 		font-size: 0;
+	}
+	.view{
+		position: relative;
+		overflow: hidden;
 	}
 		div,video,object,embed{
 			width: 100%;
 			height: 100%;
 		}
 		.controls{
-			width: auto;
+			z-index: 1200;
+			width: 100%;
 			height: 20px;
 			background-color: rgba(0,0,0,0.1);
 			padding-top: 1px;
@@ -29,13 +35,13 @@
 			margin-left: 10px;
 			z-index: 1000;
 		}
-		.progress{
-			box-sizing: border-box;
+		.pro-wrapper{
+			/*box-sizing: border-box;*/
 			position: relative;
-			width: 100%;
+			width: auto;
 			height: 10px;
-			padding: 0 100px;
-			margin: 4px 0 5px;
+			/*padding: 4px 0 5px;*/
+			margin: 4px 100px;
 			background-color: #ccc;
 			background-clip: content-box;
 		}
@@ -43,46 +49,94 @@
 
 			width: 0;
 			height: 10px;
+			position: absolute;
 			background-color: orange;
 			z-index: 100;
 		}
 		.load-progress{
-			width: 0;
+			/*width: 0;*/
 			max-width: 100%;
 			height: 10px;
-			position: absolute;
+			
 			top:0;
 			left: 0;
 			background-color: #aaa;
 		}
+		.pro-wrapper .hint{
+			z-index: 1000;
+			position: absolute;
+			top: -15px;
+			display: inline-block;
+			width: 50px;
+			height: 15px;
+			font-size: 10px;
+			line-height: 15px;
+			background-color: rgba(0,0,0,0.9);
+			color: white;
+			text-align: center;
+			opacity: 0;
+		}
 		.time{
+
 			display: inline;
 			width: auto;
 			float: right;
 			margin-right: 10px;
 		}
+		.ad-wrapper{
+			
+		}
+		.ad{
+			position: absolute;
+			left: 0;
+			top: 0;
+			/*position: relative;*/
+			width: 100%;
+			height: 100%;
+			display: none;
+			vertical-align: middle;
+			text-align: center;
+		}
+		.ad img{
+			width: 70%;
+			margin: 10%;
+		}
 	</style>
 </head>
 <body>
 <div class="play_v">
-	<video controls="controls">
-		<source src="video/langyabang_18.mp4" type="video/mp4">
-		<source src="video/langyabang_18.ogv" type="video/ogg">
-		<source src="video/langyabang_18.webm" type="video/webm">
-		<object data="video/langyabang_18.mp4">
-			<embed src="video/langyabang_18.mp4" />
+<div class="view">
+	<!-- <video controls="controls" poster="images/mei.png"> -->
+		<!-- <source src="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.mp4" type="video/mp4"> -->
+		<!-- <source src="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.ogg" type="video/ogg"> -->
+		<!-- <source src="video/langyabang_18.webm" type="video/webm"> -->
+		<object data="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.mp4">
+			<embed src="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.mp4" />
 		</object>
-	</video><div class="controls">
+	<!-- </video> -->
+	<!-- <div class="ad-wrapper"> -->
+		<div class="ad">
+				<img src="images/a.jpg">
+		</div>
+	<!-- </div> -->
+</div>
+		<div class="controls">
 			
 			<button class="start-pause" type="button">开始</button>
 			<button class="end" type="button">停止</button>
 			
-			<div class="time">00:00:00</div>
-			<div class="progress">
-				<div class="inner-progress"></div>
-				<div class="load-progress"></div>
+			<div class="time">0:0:0</div>
+			<div class="pro-wrapper">
+				<div class="progress">
+					<div class="inner-progress"></div>
+					<div class="load-progress"></div>
+					
+				</div>
+				<span class="hint">0:0:0</span>
 			</div>
+			
 		</div>
+		
 </div>
 	<script>
 		(function(){
@@ -90,46 +144,74 @@
 			var start_pause=document.querySelector(".start-pause");
 			var end=document.querySelector(".end");
 			var time=document.querySelector(".time");
+			var progress=document.querySelector(".progress");
 			var inner_progress=document.querySelector(".inner-progress");
 			var interval=null;
 			var load_progress=document.querySelector(".load-progress");
+			var hint=document.querySelector(".hint");
+			var ad=document.querySelector(".ad");
+			var ad_img=document.querySelector(".ad img");
+			var view=document.querySelector(".view");
 			video.removeAttribute("controls"); 
 			end.onclick=function(){
 				video.pause();
 				start_pause.innerHTML="开始";
+				ad.style.display="block";
 				clearInterval(interval);
 				video.currentTime=0;
 				update();
 			};
 			
 			var start_pause_f=function (){
-				console.log(video);
+
 				// console.log(video.paused);
 				if(video.paused){
 					video.play();
-					this.innerHTML="暂停";
+					start_pause.innerHTML="暂停";
 					init();
-					// is_playing=false;
+					ad.style.display="none";
 				}else{
 					video.pause();
-					this.innerHTML="开始";
+					start_pause.innerHTML="开始";
 					clearInterval(interval);
-					// is_playing=true;
+					ad.style.display="block";
 				}
 				
 			};
-
+			view.onclick=start_pause_f;
 			start_pause.onclick=start_pause_f;
-			console.log(video);
 			var update=function (){
 				var c_time=video.currentTime;
 				time.innerHTML=changeTime(c_time);
 				inner_progress.style.width=c_time/video.duration*100+"%";
 				load_progress.style.width=video.buffered.end(0)/video.duration*100+"%";
-				console.log(video.buffered);
+				
 			};
 			var init=function(){
 				interval=window.setInterval(update,1000);
+			};
+			progress.onclick=function(e){
+				var start_pos=this.clientX;
+				var click_pos=e.offsetX;
+				// console.log(start_pos,",",click_pos,",");
+				// console.log(e.clientX,",",e.offsetX);
+				// console.log(this.clientWidth);
+				var time=click_pos/this.clientWidth*video.duration;
+				// console.log(time);
+				video.currentTime=time;
+				update();
+			};
+			progress.onmousemove=function(e){
+				// console.log(e.offsetX,",",this.clientWidth);
+				hint.style.left=e.offsetX-25+"px";
+				var time=e.offsetX/this.clientWidth*video.duration;
+				hint.innerHTML=changeTime(time);
+			};
+			progress.onmouseover=function(){
+				hint.style.opacity=1;
+			};
+			progress.onmouseout=function(){
+				hint.style.opacity=0;
 			}
 			function changeTime(s){
 				// console.log(s);
@@ -137,7 +219,13 @@
 				// console.log(r);
 				return Math.floor(s/3600)+":"+Math.floor(s%3600/60)+":"+Math.floor(s%60);
 			};
-			init();
+			ad_img.onclick=function(e){
+				alert("点击ad");
+				e.stopPropagation();
+			};
+			// init();
+			// console.log(ad_img,",",view.clientHeight,",",ad_img.height)
+			// ad_img.style.marginTop=(view.clientHeight-ad_img.clientHeight)/2+"px";
 		})();
 	</script>
 </body>
