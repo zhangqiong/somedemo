@@ -8,8 +8,10 @@
 		margin:0;
 		padding:0;
 	}
-	.play_v{
+	.play-v{
 		position: relative;
+		width: 534px;
+		height: 300px;
 		font-size: 0;
 	}
 	.view{
@@ -20,17 +22,26 @@
 			width: 100%;
 			height: 100%;
 		}
-		.controls{
+		
+		.js.controls{
+			position: absolute;
+			bottom: 0;
+			display: none;
 			z-index: 1200;
 			width: 100%;
-			height: 20px;
-			background-color: rgba(0,0,0,0.1);
+			height: 40px;
+			background-color: rgba(0,0,0,0.4);
 			padding-top: 1px;
-			line-height: 20px;
+			line-height: 40px;
 			font-size: 17px;
+		}
+		.controls button{
+			margin-top: 6px; 
+			height: 27px;
 		}
 		.start-pause,
 		.end{
+			display: inline;
 			float: left;
 			margin-left: 10px;
 			z-index: 1000;
@@ -41,7 +52,7 @@
 			width: auto;
 			height: 10px;
 			/*padding: 4px 0 5px;*/
-			margin: 4px 100px;
+			margin: 14px 100px;
 			background-color: #ccc;
 			background-clip: content-box;
 		}
@@ -76,12 +87,15 @@
 			text-align: center;
 			opacity: 0;
 		}
-		.time{
+		.time,.full-screen{
 
 			display: inline;
 			width: auto;
 			float: right;
 			margin-right: 10px;
+		}
+		.time{
+			color: white;
 		}
 		.ad-wrapper{
 			
@@ -104,27 +118,37 @@
 	</style>
 </head>
 <body>
-<div class="play_v">
-<div class="view">
-	<!-- <video controls="controls" poster="images/mei.png"> -->
-		<!-- <source src="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.mp4" type="video/mp4"> -->
-		<!-- <source src="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.ogg" type="video/ogg"> -->
-		<!-- <source src="video/langyabang_18.webm" type="video/webm"> -->
-		<object data="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.mp4">
-			<embed src="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.mp4" />
-		</object>
-	<!-- </video> -->
-	<!-- <div class="ad-wrapper"> -->
-		<div class="ad">
-				<img src="images/a.jpg">
+	<div class="play-v">
+		<div class="view">
+		<!-- 不兼容Windows下的Safari -->
+		<!-- video 不兼容IE678 Safari3.1,3.2 Firefox2,3 opera10.1 operaMini-->
+			<video controls="controls" poster="images/mei.png">
+				<!-- MP4格式不兼容Firefox 20以下和opera 24以下 Safari3.1以下-->
+				<!-- 部分兼容FF34-21 安卓浏览器4.3以下 安卓ff44 UC9.9 -->
+
+				<source src="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.mp4" type="video/mp4">
+				<!-- <source src="video/langyabang_18.mp4" type="video/mp4"> -->
+				<!-- ogg格式兼容Firefox 20以下和opera 24以下 安卓ff44 UC9.9-->
+				<!-- 不兼容FF 2~3 Opera10.1  -->
+				<source src="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.ogg" type="video/ogg">
+				<!-- <object data="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.mp4"> -->
+				<!-- ie7/8有object会打开WindowsMediaPlayer -->
+				<!-- ie7/8只有embed会正常播放 -->
+				<!-- <img src="images/mei.png"> -->
+					<embed src="http://nettuts.s3.amazonaws.com/763_sammyJSIntro/trailer_test.mp4" pluginspage="http://www.macromedia.com/go/getflashplayer"/>
+				<!-- </object> -->
+			</video>
+			<!-- <div class="ad-wrapper"> -->
+			<div class="ad">
+					<img src="images/a.jpg">
+			</div>
+			<!-- </div> -->
 		</div>
-	<!-- </div> -->
-</div>
 		<div class="controls">
 			
 			<button class="start-pause" type="button">开始</button>
 			<button class="end" type="button">停止</button>
-			
+			<button class="full-screen">FS</button>
 			<div class="time">0:0:0</div>
 			<div class="pro-wrapper">
 				<div class="progress">
@@ -133,97 +157,145 @@
 					
 				</div>
 				<span class="hint">0:0:0</span>
+				
 			</div>
 			
 		</div>
 		
-</div>
+	</div>
 	<script>
 		(function(){
 			var video=document.querySelector("video");
-			var start_pause=document.querySelector(".start-pause");
-			var end=document.querySelector(".end");
-			var time=document.querySelector(".time");
-			var progress=document.querySelector(".progress");
-			var inner_progress=document.querySelector(".inner-progress");
-			var interval=null;
-			var load_progress=document.querySelector(".load-progress");
-			var hint=document.querySelector(".hint");
-			var ad=document.querySelector(".ad");
-			var ad_img=document.querySelector(".ad img");
-			var view=document.querySelector(".view");
-			video.removeAttribute("controls"); 
-			end.onclick=function(){
-				video.pause();
-				start_pause.innerHTML="开始";
-				ad.style.display="block";
-				clearInterval(interval);
-				video.currentTime=0;
-				update();
-			};
-			
-			var start_pause_f=function (){
-
-				// console.log(video.paused);
-				if(video.paused){
-					video.play();
-					start_pause.innerHTML="暂停";
-					init();
-					ad.style.display="none";
-				}else{
+			if(video){
+				var play_v=document.querySelector(".play-v");
+				var start_pause=document.querySelector(".start-pause");
+				var end=document.querySelector(".end");
+				var time=document.querySelector(".time");
+				var progress=document.querySelector(".progress");
+				var inner_progress=document.querySelector(".inner-progress");
+				var interval=null;
+				var load_progress=document.querySelector(".load-progress");
+				var hint=document.querySelector(".hint");
+				var ad=document.querySelector(".ad");
+				var ad_img=document.querySelector(".ad img");
+				var view=document.querySelector(".view");
+				var controls=document.querySelector(".controls");
+				var full_screen=document.querySelector(".full-screen");
+				video.removeAttribute("controls"); 
+				end.onclick=function(){
 					video.pause();
 					start_pause.innerHTML="开始";
-					clearInterval(interval);
 					ad.style.display="block";
+					clearInterval(interval);
+					video.currentTime=0;
+					update();
+				};
+				
+				var show_controls=function(){
+					controls.style.display="block";
+				};
+				var hide_controls=function(){
+					controls.style.display="none";
 				}
-				
-			};
-			view.onclick=start_pause_f;
-			start_pause.onclick=start_pause_f;
-			var update=function (){
-				var c_time=video.currentTime;
-				time.innerHTML=changeTime(c_time);
-				inner_progress.style.width=c_time/video.duration*100+"%";
-				load_progress.style.width=video.buffered.end(0)/video.duration*100+"%";
-				
-			};
-			var init=function(){
-				interval=window.setInterval(update,1000);
-			};
-			progress.onclick=function(e){
-				var start_pos=this.clientX;
-				var click_pos=e.offsetX;
-				// console.log(start_pos,",",click_pos,",");
-				// console.log(e.clientX,",",e.offsetX);
-				// console.log(this.clientWidth);
-				var time=click_pos/this.clientWidth*video.duration;
-				// console.log(time);
-				video.currentTime=time;
-				update();
-			};
-			progress.onmousemove=function(e){
-				// console.log(e.offsetX,",",this.clientWidth);
-				hint.style.left=e.offsetX-25+"px";
-				var time=e.offsetX/this.clientWidth*video.duration;
-				hint.innerHTML=changeTime(time);
-			};
-			progress.onmouseover=function(){
-				hint.style.opacity=1;
-			};
-			progress.onmouseout=function(){
-				hint.style.opacity=0;
+				play_v.addEventListener("mouseover",show_controls);
+				play_v.addEventListener("mouseout",hide_controls);
+
+				var fullScreen_f=function (){
+					// 除FF47,opera12.1都是部分支持的
+					// ff10+,chrome15+,Safar5.1+,opera12.1+,opera mobile33,chrome for android47,ff for android 44部分支持
+					// ios Safari,IE10之前,UC,android browser都不支持
+					if(video.webkitRequestFullscreen){
+						video.webkitRequestFullscreen();
+					}
+					else if(video.mozRequestFullScreen){
+						video.mozRequestFullScreen();
+					}
+					else if(video.msRequestFullscreen){
+						video.msRequestFullscreen();
+					}
+					else {
+					play_v.style.cssText = 'position: fixed; width:' + window.innerWidth + 'px; height: ' + window.innerHeight + 'px;';
+
+					}
+				};full_screen.onclick=fullScreen_f;
+				video.addEventListener("ended",function(){
+					start_pause.innerHTML="开始";
+					console.log(this,",",this.networkState);
+					video.innerHTML='<source src="video/langyabang_18.mp4" type="video/mp4">';
+					video.load();
+					video.play();
+				});
+				var start_pause_f=function (){
+
+					// console.log(video.paused);
+					if(video.paused){
+						video.play();
+						start_pause.innerHTML="暂停";
+						init();
+						ad.style.display="none";
+					}else{
+						video.pause();
+						start_pause.innerHTML="开始";
+						clearInterval(interval);
+						ad.style.display="block";
+					}
+					
+				};
+				view.onclick=start_pause_f;
+				start_pause.onclick=start_pause_f;
+				var update=function (){
+					var c_time=video.currentTime;
+					time.innerHTML=changeTime(c_time);
+					inner_progress.style.width=c_time/video.duration*100+"%";
+					load_progress.style.width=video.buffered.end(0)/video.duration*100+"%";
+
+					console.log(video.buffered.length);
+					
+				};
+				var init=function(){
+					interval=window.setInterval(update,1000);
+				};
+				progress.onclick=function(e){
+					// var start_pos=this.clientX;
+					// var click_pos=e.offsetX;
+					// console.log(start_pos,",",this.offsetLeft,",",this.clientLeft);
+					// console.log(e.clientX,",",e.offsetX);
+					// console.log(this.clientWidth);
+					var time=(e.offsetX || (e.clientX-100))/this.clientWidth*video.duration;
+					// console.log(time);
+					video.currentTime=time;
+					update();
+				};
+				progress.onmousemove=function(e){
+					// console.log(e.offsetX,",",this.clientWidth);
+					hint.style.left=(e.offsetX-25||e.clientX-125)+"px";
+					// console.log((e.offsetX-25||e.clientX-125)+"px");
+					var time=e.offsetX/this.clientWidth*video.duration||(e.clientX-100)/this.clientWidth*video.duration;
+					hint.innerHTML=changeTime(time);
+				};
+				progress.onmouseover=function(){
+					hint.style.opacity=1;
+				};
+				progress.onmouseout=function(){
+					hint.style.opacity=0;
+				}
+				function changeTime(s){
+					// console.log(s);
+					// var r=;
+					// console.log(r);
+					return Math.floor(s/3600)+":"+Math.floor(s%3600/60)+":"+Math.floor(s%60);
+				};
+				ad_img.onclick=function(e){
+					alert("点击ad");
+					e.stopPropagation();
+				};
+				// init();
+				controls.classList.add("js");
+				video.addEventListener("loadeddata",function(){
+					init();
+				})
 			}
-			function changeTime(s){
-				// console.log(s);
-				// var r=;
-				// console.log(r);
-				return Math.floor(s/3600)+":"+Math.floor(s%3600/60)+":"+Math.floor(s%60);
-			};
-			ad_img.onclick=function(e){
-				alert("点击ad");
-				e.stopPropagation();
-			};
-			// init();
+			
 			// console.log(ad_img,",",view.clientHeight,",",ad_img.height)
 			// ad_img.style.marginTop=(view.clientHeight-ad_img.clientHeight)/2+"px";
 		})();
