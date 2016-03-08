@@ -4,6 +4,9 @@
 	<meta charset="UTF-8">
 	<title>视频播放</title>
 	<style type="text/css">
+	body{
+		background-color: #000;
+	}
 	*{
 		margin:0;
 		padding:0;
@@ -14,6 +17,14 @@
 		height: 300px;
 		font-size: 0;
 	}
+	.play-v:-webkit-full-screen{
+		width: 100%;
+		height: 100%;
+	}
+	.play-v.full{
+		position: fixed;
+
+	}
 	.view{
 		position: relative;
 		overflow: hidden;
@@ -22,11 +33,15 @@
 			width: 100%;
 			height: 100%;
 		}
-		
+		/*当js禁用时不显示自定义控件*/
+		.controls{
+			display: none;
+		}
 		.js.controls{
+			display: block;
 			position: absolute;
 			bottom: 0;
-			display: none;
+			opacity: 1;
 			z-index: 1200;
 			width: 100%;
 			height: 40px;
@@ -38,6 +53,7 @@
 		.controls button{
 			margin-top: 6px; 
 			height: 27px;
+			line-height: 27px;
 		}
 		.start-pause,
 		.end{
@@ -181,8 +197,11 @@
 				var view=document.querySelector(".view");
 				var controls=document.querySelector(".controls");
 				var full_screen=document.querySelector(".full-screen");
+				var timeout=null;
 				video.removeAttribute("controls"); 
-				end.onclick=function(){
+
+				// 按停止键
+				var end_f=function(){
 					video.pause();
 					start_pause.innerHTML="开始";
 					ad.style.display="block";
@@ -190,41 +209,125 @@
 					video.currentTime=0;
 					update();
 				};
+				end.onclick=end_f;
 				
-				var show_controls=function(){
-					controls.style.display="block";
+				
+				// 鼠标悬浮显示控件,类似mouseenter
+				var show_controls=function(e){
+					// console.log(e.currentTarget);
+					// console.log(e.relatedTarget);
+					// // console.log(e.target==e.currentTarget)
+					// console.log(e.currentTarget.getElementsByClassName(e.relatedTarget.className));
+					if(e.relatedTarget!==e.currentTarget && e.currentTarget.getElementsByClassName(e.relatedTarget.className).length===0){
+						controls.style.opacity=1;
+						clearTimeout(timeout);
+					}
+					
+					
 				};
-				var hide_controls=function(){
-					controls.style.display="none";
-				}
-				play_v.addEventListener("mouseover",show_controls);
-				play_v.addEventListener("mouseout",hide_controls);
+				var hide_controls=function(e){
+						// console.log(this);
+					if(e.relatedTarget!==e.currentTarget && e.currentTarget.getElementsByClassName(e.relatedTarget.className).length===0){
+						timeout=setTimeout(hide,500);
+					}
+					function hide(){
+						console.log("yingcang");
+						// console.log("timeout",this);
+						controls.style.opacity=0;
+					}
 
+				
+				}
+				controls.addEventListener("mouseover",show_controls);
+				controls.addEventListener("mouseout",hide_controls);
+
+				var resize_f=function(){
+					console.log("tiaozheng");
+					play_v.style.cssText="width:"+window.innerWidth+"px;height:"+window.innerHeight+"px;";
+				};
+				// 全屏
 				var fullScreen_f=function (){
 					// 除FF47,opera12.1都是部分支持的
 					// ff10+,chrome15+,Safar5.1+,opera12.1+,opera mobile33,chrome for android47,ff for android 44部分支持
 					// ios Safari,IE10之前,UC,android browser都不支持
-					if(video.webkitRequestFullscreen){
-						video.webkitRequestFullscreen();
+					if(play_v.requestFullscreen){
+						play_v.requestFullscreen();
 					}
-					else if(video.mozRequestFullScreen){
-						video.mozRequestFullScreen();
+					else if(play_v.webkitRequestFullscreen){
+						play_v.webkitRequestFullscreen();
 					}
-					else if(video.msRequestFullscreen){
-						video.msRequestFullscreen();
+					else if(play_v.mozRequestFullScreen){
+						play_v.mozRequestFullScreen();
+					}
+					else if(play_v.msRequestFullscreen){
+						play_v.msRequestFullscreen();
 					}
 					else {
-					play_v.style.cssText = 'position: fixed; width:' + window.innerWidth + 'px; height: ' + window.innerHeight + 'px;';
+						console.log("将放大");
+						play_v.className+=" full";
+						play_v.style.cssText = 'position: fixed; width:' + window.innerWidth + 'px; height: ' + window.innerHeight + 'px;';
+						window.addEventListener("resize",resize_f);
 
 					}
-				};full_screen.onclick=fullScreen_f;
+
+				};
+				full_screen.onclick=fullScreen_f;
+
+				// 退出全屏
+				var exit_fullScreen_f=function(){
+					if(document.cancelFullScreen){
+							document.cancelFullScreen();
+					}else if(document.mozCancelFullScreen){
+						document.mozCancelFullScreen();
+					}else if(document.webkitCancelFullScreen){
+						document.webkitCancelFullScreen();
+					}else if(document.msCancelFullScreen){
+						document.msCancelFullScreen();
+					}else{
+						console.log("将缩小为正常大小");
+						play_v.style.cssText='';
+						play_v.className="play-v";
+						window.removeEventListener("resize",resize_f);
+					}
+				}
+
+
+
+				// 全屏非全屏切换
+				var toggle_fullScreen_f=function(){
+					console.log("qiehuan");
+					if(document.fullscreenElement || document.mozFullScreenElement|| document.webkitFullscreenElement || play_v.className.search("full")>-1){
+
+						console.log(play_v.className.search("full"));
+						console.log(play_v.className);
+						exit_fullScreen_f();
+					}else{
+						console.log("没有全屏");
+						fullScreen_f();
+					}
+				}
+
+				// 回车切换全屏非全屏
+				document.addEventListener("keydown",function(e){
+					
+					if(e.keyCode==13){
+						toggle_fullScreen_f();
+					}else if(e.keyCode==27){
+						exit_fullScreen_f();
+					}
+					},false);
+
+				// 停止事件
 				video.addEventListener("ended",function(){
-					start_pause.innerHTML="开始";
-					console.log(this,",",this.networkState);
-					video.innerHTML='<source src="video/langyabang_18.mp4" type="video/mp4">';
-					video.load();
-					video.play();
+					end_f();
+					exit_fullScreen_f();
+					
+					// video.innerHTML='<source src="video/langyabang_18.mp4" type="video/mp4">';
+					// video.load();
+					// video.play();
 				});
+
+				// 播放暂停按钮
 				var start_pause_f=function (){
 
 					// console.log(video.paused);
@@ -243,6 +346,8 @@
 				};
 				view.onclick=start_pause_f;
 				start_pause.onclick=start_pause_f;
+
+				// 更新当前加载进度条、播放进度条
 				var update=function (){
 					var c_time=video.currentTime;
 					time.innerHTML=changeTime(c_time);
@@ -252,9 +357,21 @@
 					console.log(video.buffered.length);
 					
 				};
+
+				// 将秒转换为0:0:0形式显示
+				function changeTime(s){
+					// console.log(s);
+					// var r=;
+					// console.log(r);
+					return Math.floor(s/3600)+":"+Math.floor(s%3600/60)+":"+Math.floor(s%60);
+				};
+
+				// 开始更新进度条状态
 				var init=function(){
 					interval=window.setInterval(update,1000);
 				};
+
+				// 进度条时间跳转
 				progress.onclick=function(e){
 					// var start_pos=this.clientX;
 					// var click_pos=e.offsetX;
@@ -266,6 +383,8 @@
 					video.currentTime=time;
 					update();
 				};
+
+				// 进度条鼠标悬浮显示时间
 				progress.onmousemove=function(e){
 					// console.log(e.offsetX,",",this.clientWidth);
 					hint.style.left=(e.offsetX-25||e.clientX-125)+"px";
@@ -279,20 +398,19 @@
 				progress.onmouseout=function(){
 					hint.style.opacity=0;
 				}
-				function changeTime(s){
-					// console.log(s);
-					// var r=;
-					// console.log(r);
-					return Math.floor(s/3600)+":"+Math.floor(s%3600/60)+":"+Math.floor(s%60);
-				};
+				
+				// 暂停显示广告的点击
 				ad_img.onclick=function(e){
 					alert("点击ad");
 					e.stopPropagation();
 				};
-				// init();
-				controls.classList.add("js");
+
+				// 当js没被禁用时启用控件
+				controls.className="js controls";
+
+				// 视频加载开始更新进度条
 				video.addEventListener("loadeddata",function(){
-					init();
+					// init();
 				})
 			}
 			
