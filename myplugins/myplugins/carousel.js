@@ -3,6 +3,7 @@ var Carousel=function($ele){
 			this.$ele=$ele;
 			this.active_index=0;
 			this.interval=null;
+			this.lastTimestamp=null;
 			this.carin_count=this.$ele.find('.carousel-inner').length;
 				console.log(this.carin_count);
 				var whi_count=this.carin_count;
@@ -15,9 +16,9 @@ var Carousel=function($ele){
 				var $points_wrapper=$(point_string);
 			this.$points=$points_wrapper.children("li");
 				this.$points.click(
-						function(){
+						function(e){
 							// console.log($(this).attr("data-slide-no"));
-								_this.to($(this).attr("data-slide-no"));
+								_this.to(e,$(this).attr("data-slide-no"));
 						}
 					);
 				this.$points.eq(this.active_index).addClass("active");
@@ -34,17 +35,28 @@ var Carousel=function($ele){
 				this.$ele.mouseenter($.proxy(_this.stop,_this));
 				this.$ele.mouseleave($.proxy(_this.init,_this));
 		}
-		Carousel.prototype.to=function(index){
-			console.log(this);
+		Carousel.prototype.to=function(e,index){
+			if(e){
+				if(e.timeStamp-this.lastTimestamp<1000) return;
+				this.lastTimestamp=e.timeStamp;
+			}
+			// console.log(this);
 			if(this.active_index==index)return;
-			else if(this.active_index<index){console.log("to",index);
-				this.slide_next(index);
+			else if(this.active_index<index){
+				console.log("to",index);
+				this.slide_next(e,index);
 			}else{
-				this.slide_prev(index);
+				this.slide_prev(e,index);
 			}
 		}
-		Carousel.prototype.slide_next=function (index){
-			console.log(this);
+		Carousel.prototype.slide_next=function (e,index){
+
+			if(e && !index){
+				console.log(e.timeStamp-this.lastTimestamp);
+				if(e.timeStamp-this.lastTimestamp<1000) return;
+				this.lastTimestamp=e.timeStamp;
+			}
+			console.log(index);
 			this.$points.eq(this.active_index).removeClass("active");
 			if(index>=0 && index<this.carin_count){
 				console.log("indexyes");
@@ -58,7 +70,12 @@ var Carousel=function($ele){
 			next.addClass("active");
 		
 		}
-		Carousel.prototype.slide_prev=function(index){
+		Carousel.prototype.slide_prev=function(e,index){
+			if(e && !index){
+				
+				if(e.timeStamp-this.lastTimestamp<1000) return;
+				this.lastTimestamp=e.timeStamp;
+			}
 			this.$points.eq(this.active_index).removeClass("active");
 			if(index>=0 && index<this.carin_count){
 				this.active_index=index;
