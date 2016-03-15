@@ -6,7 +6,12 @@
 			overflow: hidden;
 			/*border: 1px solid;*/
 		}
-
+.carousel *::selection{
+    background-color: rgba(0,0,0,0);
+}
+.carousel *::-moz-selection{
+     background-color: rgba(0,0,0,0);
+ }
 		.carousel-inner{
 			position: absolute;
 			top:0;
