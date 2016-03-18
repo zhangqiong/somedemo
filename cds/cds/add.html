@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>首页 - 管理后台 - Powered by myAdmin!</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="http://test.admin.cds.51y5.net/static/js/lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="http://test.admin.cds.51y5.net/static/css/stylesheets_default/theme.css">
+    <!--     <link rel="stylesheet" href="/static/css/stylesheets_default/theme.css"> -->
+    <link rel="stylesheet" href="http://test.admin.cds.51y5.net/static/css/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="http://test.admin.cds.51y5.net/static/css/other.css">
+    <link rel="stylesheet" href="http://test.admin.cds.51y5.net/static/css/jquery-ui.css" />
+    <script src="http://test.admin.cds.51y5.net/static/js/lib/jquery-1.8.1.min.js"></script>
+    <!--script src="http://www.cnbootstrap.com/assets/js/jquery.js"></script-->
+    <script src="http://test.admin.cds.51y5.net/static/js/lib/bootstrap/js/bootbox.min.js"></script>
+    <script src="http://test.admin.cds.51y5.net/static/js/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="http://test.admin.cds.51y5.net/static/js/other.js"></script>
+    <script src="http://test.admin.cds.51y5.net/static/js/jquery-ui.js"></script>
+    <script src="http://test.admin.cds.51y5.net/static/js/lib/jquery-ui-timepicker-addon.js"></script>
+    <!-- Demo page code -->
+    <style type="text/css">
+    .controls-row{font-size: 0;}
+    #line-chart {
+        height: 300px;
+        width: 800px;
+        margin: 0px auto;
+        margin-top: 1em;
+    }
+    
+    .brand {
+        font-family: georgia, serif;
+    }
+    
+    .brand .first {
+        color: #ccc;
+        font-style: italic;
+    }
+    
+    .brand .second {
+        color: #fff;
+        font-weight: bold;
+    }
+    .channel_item{
+        float: left;list-style: none;
+        border: 1px solid #d3d3d3;
+        background-color: #e6e6e6;
+        padding: 15px 20px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        position: relative;
+    }
+    .add_btn{color: #0285f0;}
+    .channel_item .remove{width: 14px; height: 14px; border: none; background: none; position: absolute; top: 0; right: 0; font-size: 14px; line-height: 14px; padding: 0; background-color: #CCCCCC;}
+    #channel_items .show_checked .remove{
+        display: none;
+    }
+    .channel_item span{position: absolute; bottom: 2px; left: 0; width: 100%; font-size: 12px; text-align: center; line-height: 12px; color: #0285f0;}
+    .controls-row button{vertical-align: top;margin-left: 10px;}
+    .addNewCnt{font-size: 30px; text-align: center; line-height: 50px; border-top: 1px #dddddd solid; border-bottom: 1px #dddddd solid; cursor: pointer;}
+    .cnt_item_div{position: relative;min-height: 148px;border-top: 1px #dddddd solid;padding-top: 5px;padding-left: 120px;padding-bottom: 5px;}
+    .cnt_item_div .item_index{
+        background-color: gainsboro;
+        position: absolute;
+        left: 0;
+        padding: 0 15px;
+        font-size: 130px;
+        line-height: 130px;
+        cursor: move;
+    }
+    .cnt_item_div .small_font{
+        font-size: 65px;
+    }
+    input[name=contentInterval]{visibility:hidden}
+    .ui-sortable{display: inline;margin:0;}
+    
+
+    .templates{list-style: none;margin: 0;}
+    .templates li{
+        border: 1px solid #dbdbdb; 
+        padding: 10px;
+        margin-bottom: 5px;
+        cursor: pointer;
+    }
+    .templates li.active{
+        border: 1px solid #7FFF00; 
+    }
+    .templates h3{
+        line-height: 1.5em;
+        margin-top: -0.1em;
+    }
+    .templates img{display: inline-block;vertical-align: top;width: 148px;}
+
+    .templates .single{}
+    .templates .single .left{display: inline-block;width: 240px;vertical-align: top;}
+    .templates .single h3{
+        width: 240px;
+        min-height: 60px;
+    }
+    
+    .templates .single img{margin-left: 80px;}
+    .templates .tag{border-style: solid;border-width: 1px; margin-right: 10px;}
+    .templates .top,.templates .rec{border-color: #0000ff; color: #0000ff}
+    .templates .hot{border-color: #ff0000; color: #ff0000}
+    .templates .ad{border-color: #666666; color: #666666}
+
+    .templates .treble{}
+    .templates .treble img{margin-right: 10px;margin-bottom: 5px;}
+    .templates .treble h3{
+        
+    }
+    .templates .big img{margin:0 auto;margin-bottom: 5px;width:485px;height: 285px;}
+    .templates .screen_no{
+        background-color: #A7DC20;
+        position: absolute;
+        left: 0;
+        top:6px;
+        font-size: 12px;
+    }
+
+    .cnt_item_div .tmp_name{
+        font-size: 22px;
+        text-align: center;
+        position: absolute;
+        left: 0;
+        min-width: 102px;
+        box-sizing: border-box;
+        line-height: 40px;
+        padding: 14px 6px;
+        background-color: gainsboro;
+    }
+    .cnt_item_div.t_big .tmp_name{padding: 130px 6px;}
+    .cnt_item_div.t_treble .tmp_name{padding: 30px 6px;}
+    .cnt_item_div.t_single .tmp_name{padding: 14px 6px;}
+    .cnt_item_div .tmp{
+        border: 1px solid #dbdbdb;
+        padding: 10px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        width: 485px;
+    }
+    .modal{display: none;}
+
+
+    ul,li{padding: 0;margin: 0;list-style: none;}
+    p{margin: 0; padding: 0;}
+    #l-map{height:300px;width:50%;display: inline-block;}
+    #r-result{width:100%;margin-bottom: 5px;}
+    .address{
+        width: 48%;
+        height: 300px;
+        overflow-y: scroll;
+        vertical-align: top;
+        display: inline-block;
+        margin-left: 10px;
+    }
+    .address li{
+        line-height: 15px;
+        font-size: 15px;
+        background-color: #dbdbdb;
+        margin: 2px 0;
+        cursor: pointer;
+    }
+    .address .t,.address .adr{line-height: 1.2;}
+    .address .t{font-size: 15px;}
+    .address .adr{font-size: 2px;}
+    .address li.active{border:1px solid #666666;}
+    </style>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://osadmin.wida.com//assets/js/html5.js"></script>
+    <![endif]-->
+</head>
+<!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
+<!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
+<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+
+<body class="">
+    <!--<![endif]-->
+    <div class="navbar">
+        <div class="navbar-inner">
+            <ul class="nav pull-right">
+                <!-- li><a href="#" class="hidden-phone visible-tablet visible-desktop" role="button">设置模板</a></li -->
+                <li id="fat-menu" class="dropdown">
+                    <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-cog"></i>设置<i class="icon-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin/setting">系统设置</a></li>
+                    </ul>
+                </li>
+                <li id="fat-menu" class="dropdown">
+                    <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                            选择模板
+                            <i class="icon-caret-down"></i>
+                        </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin/setskin?skin=default">默认模板</a></li>
+                        <li><a href="/admin/setskin?skin=blacktie">黑色领结</a></li>
+                        <li><a href="/admin/setskin?skin=wintertide">冰雪冬季</a></li>
+                        <li><a href="/admin/setskin?skin=schoolpainting">青葱校园</a></li>
+                    </ul>
+                </li>
+                <li id="fat-menu" class="dropdown">
+                    <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user"></i> fanyong <i class="icon-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href="/account/profile">我的账号</a></li>
+                        <li><a tabindex="-1" href="/user/logout">登出</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <a class="brand" href="/"><span class="first"></span> <span class="second">MyAdmin</span></a>
+        </div>
+    </div>
+    <!-- 以上为左侧菜单栏 sidebar -->
+    <div class="sidebar-nav">
+        <a href="#sidebar_menu_1" class="nav-header" data-toggle="collapse">
+            <i class="icon-th"></i>控制面板 <i class="icon-chevron-up"></i></a>
+        <ul id="sidebar_menu_1" class="nav nav-list collapse">
+            <li><a href="http://test.admin.cds.51y5.net/account/index">账号列表</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/group/index">账号组管理</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/group/permission">权限管理</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/module/index">菜单模块</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/menu/index">功能列表</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/quicknote/index">便签管理</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/admin/syslog">操作记录</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/admin/system">系统信息</a></li>
+        </ul>
+        <a href="#sidebar_menu_2" class="nav-header" data-toggle="collapse">
+            <i class="icon-th"></i>常量配置 <i class="icon-chevron-up"></i></a>
+        <ul id="sidebar_menu_2" class="nav nav-list collapse in">
+            <li><a href="http://test.admin.cds.51y5.net/news/index">新闻源列表</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/news/add">添加新闻源</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/content/index">内容源列表</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/content/add">添加内容源</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/channel/index">频道列表配置</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/tag/index">tag列表</a></li>
+        </ul>
+        <a href="#sidebar_menu_3" class="nav-header" data-toggle="collapse">
+            <i class="icon-list-alt"></i>模板配置 <i class="icon-chevron-up"></i></a>
+        <ul id="sidebar_menu_3" class="nav nav-list collapse in">
+            <li><a href="http://test.admin.cds.51y5.net/template/index">模板列表</a></li>
+            <li><a href="http://test.admin.cds.51y5.net/template/default">默认模板</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="header">
+            <div class="stats">
+                <p class="stat">
+                    <!--span class="number"></span-->
+                </p>
+            </div>
+            <!--<h1 class="page-title">新增模板</h1>-->
+        </div>
+        <ul class="breadcrumb">
+            <li><a href="/">模板配置 </a> <span class="divider">/</span></li>
+            <li class="active">新增模板</li>
+        </ul>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="bb-alert alert alert-info" style="display: none;">
+                    <span>操作成功</span>
+                </div>
+                <!--- sidebarEND -->
+                <!-- START 以上内容不需更改，保证该TPL页内的标签匹配即可 -->
+                <div class="well">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane active in" id="home">
+                            <form id="tab" method="post" class="form-horizontal" action="/template/addpost">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#home" data-toggle="tab">请填写模板信息</a></li>
+                                    <li class="active" style="float:right;">
+                                        <select>
+                                            <option>选择已有模板填充</option>
+                                        </select>
+                                    </li>
+                                    <li style="float:right;">
+                                        <button id="btn_addCustomTmp" type="button" class="btn btn-primary" data-target="#customTemplates">插入自定义内容</button>    
+                                    </li>
+                                </ul>
+                                <div class="control-group">
+                                    <label class="control-label" for="template_name">模板名称:</label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="模板名称" id="template_name" name="template_name" required="true" value="1" />
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="template_desc">模板备注:</label>
+                                    <div class="controls">
+                                        <textarea class="input-xlarge" rows="3" placeholder="模板备注" id="template_desc" name="template_desc">1</textarea>
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="language">language:</label>
+                                    <div class="controls">
+                                        <select name="language" id="language">
+                                            <option value="cn">中文</option>
+                                            <option value="en">English</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="app_id">APPID:</label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="APPID" id="app_id" name="app_id" required="true" value="1" />
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="chan_id">设置channel:</label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="设置channel" id="chan_id" name="chan_id" required="true" value="1" />
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="version_code">设置version:</label>
+                                    <div class="controls">
+                                        <input type="text" placeholder="设置version" id="version_code" name="version_code" required="true" value="1" />
+                                        <span class="help-inline"></span>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="channel_id" name="channel_id" required="true" value="" />
+                                <input type="hidden" id="paramStr" name="paramStr" required="true" value="" />
+                                <hr />
+                            </form>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#">频道设置</a></li>
+                            </ul>
+                            <div class="control-group clearfix" id="channelDiv">
+                                <span class="channel_item" data-value="1">新闻</span>
+                                <ul id="channelList">
+                                </ul>
+                                <button class="channel_item add_btn" data-toggle="modal" data-target="#channel_items">+ 增加频道</button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mapWin">地图</button>
+                                <label for="lng">经度</label><input type="text" id="lng">
+                                <label for="lat">纬度</label><input type="text" id="lat">
+                            </div>
+                            <div id="contentDiv"></div>
+                            <div class="addNewCnt">+ 点击增加内容</div>
+                            <input type="hidden" placeholder="内容源格子数" id="lattice_num" name="lattice_num" required="true" value="" />
+                            <hr />
+                            <input type="hidden" name="submit" value="1" class="input-xlarge" required="true">
+                            <div id="msg" class="hide">
+                                <button type="button" class="close">×</button>
+                                <strong>Warning!</strong> <span></span>
+                            </div>
+                            <div class="btn-toolbar">
+                                <button type="button" id="btn_submit" class="btn btn-primary"><strong>提交</strong></button>
+                                <div class="btn-group"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer>
+                    <hr>
+                    <p class="pull-right">A <a href="#" target="_blank">Basic Backstage Management System for China Only.</a> by <a href="#" target="_blank">wida</a></p>
+                    <p>&copy; 2013 <a href="#" target="_blank">myadmin</a></p>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <div id="channel_items" class="modal fade" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">频道选择</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <label class="checkbox inline" data-name="视频" data-remark="爱奇艺">
+                            <input type="checkbox" value="2">视频(爱奇艺)
+                        </label>
+                        <label class="checkbox inline" data-name="视频" data-remark="优酷">
+                            <input type="checkbox" value="3">视频(优酷)
+                        </label>
+                        <label class="checkbox inline" data-name="视频" data-remark="土豆">
+                            <input type="checkbox" value="4">视频(土豆)
+                        </label>
+                        <label class="checkbox inline" data-name="交友" data-remark="">
+                            <input type="checkbox" value="5">交友
+                        </label>
+                        <label class="checkbox inline" data-name="游戏" data-remark="">
+                            <input type="checkbox" value="6">游戏
+                        </label>
+                        <hr>
+                        <ul class=" ui-sortable show_checked "></ul>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn_channel_items_ok">提交更改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+    <!-- /custom template -->
+    <div id="customTemplates" class="modal fade" tabindex="-1" style="top:40%;width: 580px;" role="dialog" aria-hidden="false">
+        <div class="modal-dialog" style="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">自定义模版</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="templates">
+                        <li data-name="模板一" data-index="0" data-tmpid="001" data-screen="0">
+                            <div class="single">
+                                <div class="left">
+                                    <h3>测试标题,长标题，很长的标题，很长的标题0-0-001</h3>
+                                    <p><span class="tag hot">置顶</span><span>新华社</span></p>
+                                </div>
+                                <img src="./images/ad.png" alt="">
+                            </div>
+                        </li>
+                        <li data-name="模板二" data-index="0" data-tmpid="002" data-screen="0">
+                            <div class="treble">
+                                <h3>测试标题,长标题，很长的标题，很长的标题0-0-002</h3>
+                                <img src="./images/ad.png" alt="">
+                                <img src="./images/ad.png" alt="">
+                                <img src="./images/ad.png" alt="">
+                                <p><span class="tag hot">置顶</span><span>新华社</span></p>
+                            </div>
+                        </li>
+                        <li data-name="模板三" data-index="4" data-tmpid="003" data-screen="0">
+                            <div class="single">
+                                <div class="left">
+                                    <h3>测试标题,长标题，很长的标题，很长的标题0-4-003</h3>
+                                    <p><span class="tag hot">置顶</span><span>新华社</span></p>  
+                                </div>
+                                <img src="./images/ad.png" alt="">
+                            </div>
+                        </li>
+                        <li data-name="模板四" data-index="2" data-tmpid="004" data-screen="0">
+                            <div class="treble">
+                                <h3>测试标题,长标题，很长的标题，很长的标题0-2-004</h3>
+                                <img src="./images/ad.png" alt="">
+                                <img src="./images/ad.png" alt="">
+                                <img src="./images/ad.png" alt="">
+                                <p><span class="tag hot">置顶</span><span>新华社</span></p>
+                            </div>
+                        </li>
+                        <li data-name="模板五" data-index="4" data-tmpid="005" data-screen="1">
+                            <div class="single">
+                                <div class="left">
+                                    <h3>测试标题,长标题，很长的标题，很长的标题1-4-005</h3>
+                                    <p><span class="tag hot">置顶</span><span>新华社</span></p>  
+                                </div>
+                                <img src="./images/ad.png" alt="">
+                            </div>
+                        </li>
+                        <li data-name="模板六" data-index="4" data-tmpid="006" data-screen="2">
+                            <div>
+                                <h3>测试标题,长标题，很长的标题，很长的标题2-4-006</h3>
+                                <p><span class="tag hot">置顶</span><span>新华社</span></p>
+                            </div>
+                        </li>
+                        <li data-name="模板七" data-index="10" data-tmpid="007" data-screen="3">
+                            <div class="big">
+                                <h3>测试标题,长标题，很长的标题，很长的标题3-10-007</h3>
+                                <img src="./images/ad.png" alt="">
+                                <p><span class="tag hot">置顶</span><span>新华社</span></p>  
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn_custom_ok">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /custom template -->
+    <!-- /confirm -->
+    <div id="confirmWin" class="modal fade" tabindex="-1" style="width: 280px;top: 70%;margin-left: -130px" role="dialog" aria-hidden="false">
+        <div class="modal-dialog" style="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">确认</h4>
+                </div>
+                <div class="modal-body">
+                    模版重复，确认替换吗？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn_repeat_ok">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--//confirm -->
+    <!-- map -->
+    <div id="mapWin" class="modal fade" tabindex="-1" style="width: 780px;top: 50%;margin-left: -390px" role="dialog" aria-hidden="false">
+        <div class="modal-dialog" style="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">定位信息</h4>
+                </div>
+                <div class="modal-body">
+                    <iframe id="mapWin" name="mapWin" src="./position.html" style="width: 100%;height:350px;" frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn_map_ok">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=sah0Xe0NMcTKicK7LHZe5ad4"></script-->
+    <!--/map -->
+    <script type="text/javascript">
+        //alertDismiss("alert-success", 3);
+        //alertDismiss("alert-info", 10);
+        //listenShortCut("icon-plus");
+        //listenShortCut("icon-minus");
+        var contentItemIndex = 1,
+                contentItemCount = 4,//小项总数，固定值
+                contentDivMax    = 12,//大项最大数目
+                contentDivMin    = 8,//大项最小数目
+                contentDivIndex  = 1;//大项前面的数字标题
+        function resetIndex(){
+            $('#contentDiv .cnt_item_div').each(function(index,ele){
+                $(this).find('.item_index').html(index+1);
+                if((index+1)>9){
+                    $(this).find('.item_index').addClass('small_font');
+                }else{
+                    $(this).find('.item_index').removeClass('small_font');
+                }
+            });
+        }
+        //异常信息提示
+        function showMsg(msg){
+            alert(msg);
+            /**
+            $('#msg span').html(msg);
+            $('#msg').addClass('alert').show();
+            setTimeout(function(){
+                $('#msg').removeClass('alert').fadeOut();
+            },3000);
+*               */
+        }
+        function checkMax(){
+            if($('#contentDiv .cnt_item_div:not(.templates)').length==contentDivMax){
+                showMsg('大项个数最多'+contentDivMax+'个');
+                return false;
+            } 
+            return true;
+        }
+        $(function(){
+            $('#btn_map_ok').click(function(){
+                //mapWin = mapWin.contentWindow||mapWin.window;
+                $('#lng').val(mapWin.marker.getPosition().lng);
+                $('#lat').val(mapWin.marker.getPosition().lat);
+                $('#mapWin').modal('hide');
+            });
+            $('#mapWin').on('shown.bs.modal',function(){
+                mapWin.baiduMap.init();
+            });
+            function createRow(init){
+                var htmlStr = '';
+                htmlStr += '<p class="controls controls-row">';
+                if(init){
+                    htmlStr += '<select class="span2" name="contentType" disabled required="true">';       
+                }else{
+                    htmlStr += '<select class="span2" name="contentType" required="true">';
+                }
+                htmlStr += '<option value="0">-请选择-</option>';
+                if(init){
+                    htmlStr += '<option value="1" selected>新闻</option>';
+                }
+                    htmlStr += '<option value="2">游戏中心</option>';
+                    htmlStr += '<option value="3">广告</option>';
+                    htmlStr += '<option value="4" data-showInterval="1">O2O</option>';
+                    htmlStr += '</select>';
+                if(init){
+                    htmlStr += '<input class="span2" type="number" name="contentPercent" placeholder="投放比例" maxlength="3" required="true" max="100" min="0" value="100">';
+                }else{
+                    htmlStr += '<input class="span2" type="number" name="contentPercent" placeholder="投放比例" maxlength="3" required="true" max="100" min="0">';
+                }
+                    htmlStr += '<input class="span2" type="text" name="contentInterval" placeholder="展示间隔" required="true">';
+                    htmlStr += '<button type="button" class="btn btn-primary">删除</button>';
+                htmlStr += '</p>';
+                return htmlStr;
+            }
+            function resetSelectedValues(parent,besides){
+                //重设值
+                var selectedValue = '';
+                parent.find('option:selected').each(function(index,el){
+                    if($(el).val()!='0'&&(!besides||besides&&$(el).val()!=besides)){
+                        selectedValue += $(el).val()+',';
+                    }
+                });
+                parent.attr('data-cntVal',selectedValue);
+            }
+            //添加大项
+            function addNewCnt(){
+                if(!checkMax()){
+                    return;
+                }
+                
+                var htmlStr = '<div class="cnt_item_div" data-cntVal="1,"><p class="pull-right"><button name="btn_addContent" type="button" class="btn btn-primary">增加内容源</button><button name="btn_remove" type="button" class="btn btn-danger">删除</button></p><div class="item_index">'+contentDivIndex+'</div>';
+                if(contentDivIndex>9){
+                    htmlStr = '<div class="cnt_item_div" data-cntVal="1,"><p class="pull-right"><button name="btn_addContent" type="button" class="btn btn-primary">增加内容源</button><button name="btn_remove" type="button" class="btn btn-danger">删除</button></p><div class="item_index small_font">'+contentDivIndex+'</div>';
+                }
+                htmlStr += createRow(true);
+                    
+                htmlStr += '</div>';
+
+                $('#contentDiv').append(htmlStr);
+                contentDivIndex++;
+            }
+
+            $('form input,form textarea').bind('blur',function(){
+                if($(this).val()==''){
+                    $(this).parents('.control-group').addClass('error');
+                    $(this).siblings('.help-inline').html('此项不能为空');
+                }else{
+                    $(this).parents('.control-group').removeClass('error');
+                    $(this).siblings('.help-inline').html('');
+                }
+            });
+            //获取频道顺序
+            function getChannelIds(){
+                var channel_id = '';
+                $('#channelDiv .channel_item').each(function(){
+                    var dataValue = $(this).attr('data-value');
+                    if(dataValue){
+                        channel_id == ''?channel_id+=dataValue : channel_id+=(','+dataValue);     
+                    }
+                });
+                return channel_id;
+            }
+            $("#channelList").sortable({
+                cancel: "button"
+            });
+            $("#channelList").disableSelection();
+
+            $('#channelList').delegate('.channel_item .remove','click',function(){
+                $(this).parent('li').remove();
+            });
+
+            $('#channel_items .show_checked').sortable();
+            /*
+            * 百分比自动控制
+            * 百分比总和超过100时自动从第一个里面扣减，到0停止
+            */
+            $('#contentDiv').delegate('input[name=contentPercent]','change',function(e){
+                if($(this).val()<0){
+                    $(this).val(0);
+                }
+                var parentDiv = $(this).parents('.cnt_item_div');
+                var totalPer = 0;
+                parentDiv.find('input[name=contentPercent]').each(function(index,ele){
+                    totalPer += $(ele).val()*1;
+                });
+                var firstPercent = parentDiv.find('.controls-row').eq(0).find('input[name=contentPercent]');
+                var firstVal = firstPercent.val()*1;
+                if(totalPer>100){
+                    var change = totalPer-100;
+                    if((firstVal-change)>0){
+                        firstPercent.val(firstVal-change);
+                    }else{
+                        firstPercent.val(0);
+                    }
+                }else{
+                    var change = 100-totalPer;
+                    firstPercent.val(firstVal+change);
+                }
+            });
+            $('#contentDiv').delegate('select[name=contentType]','change',function(){
+                var parentDiv = $(this).parents('.cnt_item_div')
+                //获取所有下拉框选项选中值
+                var contentTypeValues = parentDiv.attr('data-cntVal');
+                //如果当前选中值不为空，且在上面已经存在，则重复
+                var repeat = false;
+                if($(this).val()!='0'&&contentTypeValues.indexOf($(this).val())>=0){
+                    $(this).val('0');
+                    repeat = true;
+                    showMsg('内容源不能重复');
+                }
+                //重设值
+                resetSelectedValues(parentDiv);
+                if(repeat){
+                    return;
+                }  
+                //是否显示‘间隔’
+                var checked = $(this).find('option:selected');
+                if($(checked).attr('data-showInterval')=='1'){
+                    $(this).siblings('input[name=contentInterval]').css('visibility','visible');
+                }else{
+                    $(this).siblings('input[name=contentInterval]').css('visibility','hidden');
+                }
+            });
+
+
+            //弹窗前初始化多选框
+            $('#channel_items').on('show.bs.modal', function (index,ele) {
+                $('#channel_items input').removeAttr('checked')
+                $('#channelDiv .channel_item').each(function(){
+                    var value = $(this).attr('data-value');
+                    $('#channel_items input[type="checkbox"][value="'+value+'"]').attr('checked','true');
+                });
+                $('#channel_items .show_checked').html($('#channelList').html());
+            });
+
+
+            // 在弹窗里点击添加或删除
+                $('#channel_items input').click(function(){
+                    var value = $(this).attr('value'),
+                        label = $(this).parent().data('name'),
+                        remark= $(this).parent().data('remark');
+                    if($(this).attr('checked')=='checked'){
+                        
+                        var html=$('#channel_items .show_checked').html() ;
+                        html+= '<li class="channel_item" data-value="'+value+'"><button type="button" class="remove">×</button>'+label+'<span>'+remark+'</span></li>';        
+                        
+                        $('#channel_items .show_checked').html(html) ;
+                    }else{
+                        $('#channel_items .show_checked [data-value='+value+']').remove();
+                        
+                    }
+                    });
+            //保存弹窗设置
+            $('#btn_channel_items_ok').bind('click',function(){
+                var itemHtml = $('#channel_items .show_checked').html(),
+                    channelIds = getChannelIds();
+                    channelArr = channelIds.split(','),
+                    temp = {};
+                for(var i=0;i<channelArr.length;i++){
+                    var channelId = channelArr[i];
+                        input     = $('#channel_items input[value='+channelId+']');
+                    if(input.attr('checked')=='checked'){
+                        temp[channelId]=true;
+                        
+                    }
+                }
+
+            
+                $('#channelList').html(itemHtml);
+                $('#channel_items').modal('hide');
+            });
+            $('#msg .close').click(function(){
+                $(this).parent().fadeOut();
+            });
+            
+            $(document).delegate('button[name=btn_remove]','click',function(){
+                if(!$(this).parents('.cnt_item_div').hasClass('templates')){
+                    contentDivIndex--;   
+                }
+                $(this).parents('.cnt_item_div').remove();
+
+
+                resetIndex();
+            });
+
+
+
+            $('#contentDiv').delegate('button[name=btn_addContent]','click',function(){
+               var _p = $(this).parents('.cnt_item_div');
+                if(_p.find('.controls-row').length==contentItemCount){
+                    showMsg('项目数量已达最大');
+                    return;
+                }
+                contentItemIndex++;
+                _p.append(createRow());
+                if(contentItemCount>3){
+                    var lineHeight = _p.css('height');
+                    _p.find('.item_index').eq(0).css('line-height',lineHeight);
+                }
+            });
+            //删除小项
+            $('#contentDiv').delegate('.controls-row button','click',function(){
+                var parentDiv = $(this).parents('.cnt_item_div');
+                var contentType = $(this).siblings('select[name=contentType]').val();
+                //重设内容源值
+                resetSelectedValues(parentDiv,contentType);
+                //删除
+                $(this).parent().remove();
+                //重设高度
+                var lineHeight = parentDiv.css('height');
+                parentDiv.find('.item_index').eq(0).css('line-height',lineHeight);
+            });
+            //增加大项事件
+            $('.addNewCnt').click(addNewCnt);
+            //表单提交
+            $('#btn_submit').click(function(){
+                //频道顺序
+                var channel_id = getChannelIds();
+                $('#channel_id').val(channel_id);
+                //验证表单必填
+                $('form input,form textarea').blur();
+                if($('form .error').length>0){
+                    showMsg('表单为填写完整');
+                    return;
+                }
+                //验证大项数量
+                var cntItemCount = $('#contentDiv .cnt_item_div').length;
+                if(cntItemCount<2){
+                    showMsg('大项个数不得小于8个');
+                    //return;
+                }
+                //验证大项不为空
+                var paramStr = '',
+                    doSubmit = true;
+                //大项cnt_item_div
+                $('#contentDiv .cnt_item_div').each(function(index,el){
+                    //里面的小项
+                    var percentTotal = 0,
+                        msg = '';
+                    if($(this).hasClass('templates')){
+                        paramStr+= '3,100,-1,'+$(this).data('tmpid')+';|';
+                    }else{
+                        $(el).find('.controls-row').each(function(index2,el2){
+                            var contentType = $(el2).find('select').eq(0).val(),
+                                contentPercent = $(el2).find('input[name=contentPercent]').eq(0).val(),
+                                contentInterval = $(el2).find('input[name=contentInterval]').eq(0).css('visibility')=='hidden'?'-1':$(el2).find('input[name=contentInterval]').eq(0).val();
+
+                            if(contentType=='0'||contentPercent==''||contentInterval==''){
+                                msg = '大项'+(index+1)+'未填写完整';
+                                doSubmit = false;
+                                return false;
+                            }else{
+                                percentTotal += contentPercent*1;
+                                if(contentPercent!='0'){
+                                    paramStr+= contentType+','+contentPercent*1+','+contentInterval+',0;';
+                                }
+                            }
+                        });
+                        if(msg==''){
+                            if(percentTotal!=100){
+                                showMsg('大项'+(index+1)+'百分比总和错误');
+                                doSubmit = false;
+                                return false;    
+                            }else{
+                                paramStr+='|';
+                            }
+                        }else{
+                            showMsg(msg);
+                            doSubmit = false;
+                            return false;
+                        }
+                    }
+                    
+                    
+                });
+                if($('#contentDiv').prev('.templates').length>0){
+                    var tempId = $('#contentDiv').prev('.templates').eq(0).data('tmpid');
+                    paramStr = '3,100,-1,'+tempId+';|'+paramStr;
+                }
+                if(doSubmit){
+                    $('#paramStr').val(paramStr);
+                    alert(paramStr);
+                    //$('#tab').submit();
+                }
+            });
+            
+            //初始化，创建8个大项
+            function init(){
+                for(var i=0;i<10;i++){
+                    addNewCnt();
+                }
+                $("#contentDiv").sortable({
+                    stop:resetIndex,
+                    handle:'.item_index',
+                    axis : 'y',
+                    cursor :'pointer',
+                    items:'.cnt_item_div'
+                });
+            }
+            init();
+        });
+    </script>
+    <script src="custom.js"></script>
+</body>
+
+</html>
