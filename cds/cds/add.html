@@ -745,20 +745,7 @@
                     });
             //保存弹窗设置
             $('#btn_channel_items_ok').bind('click',function(){
-                var itemHtml = $('#channel_items .show_checked').html(),
-                    channelIds = getChannelIds();
-                    channelArr = channelIds.split(','),
-                    temp = {};
-                for(var i=0;i<channelArr.length;i++){
-                    var channelId = channelArr[i];
-                        input     = $('#channel_items input[value='+channelId+']');
-                    if(input.attr('checked')=='checked'){
-                        temp[channelId]=true;
-                        
-                    }
-                }
-
-            
+                
                 $('#channelList').html(itemHtml);
                 $('#channel_items').modal('hide');
             });
