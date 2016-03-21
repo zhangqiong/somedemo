@@ -746,7 +746,7 @@
             //保存弹窗设置
             $('#btn_channel_items_ok').bind('click',function(){
                 
-                $('#channelList').html(itemHtml);
+                $('#channelList').html($('#channel_items .show_checked').html());
                 $('#channel_items').modal('hide');
             });
             $('#msg .close').click(function(){
