@@ -55,9 +55,11 @@
     }
     .add_btn{color: #0285f0;}
     .channel_item .remove{width: 14px; height: 14px; border: none; background: none; position: absolute; top: 0; right: 0; font-size: 14px; line-height: 14px; padding: 0; background-color: #CCCCCC;}
+/*2016-03-21修改增加频道按增加顺序排序*/
     #channel_items .show_checked .remove{
         display: none;
     }
+/*2016-03-21修改增加频道按增加顺序排序-end*/
     .channel_item span{position: absolute; bottom: 2px; left: 0; width: 100%; font-size: 12px; text-align: center; line-height: 12px; color: #0285f0;}
     .controls-row button{vertical-align: top;margin-left: 10px;}
     .addNewCnt{font-size: 30px; text-align: center; line-height: 50px; border-top: 1px #dddddd solid; border-bottom: 1px #dddddd solid; cursor: pointer;}
@@ -397,8 +399,10 @@
                         <label class="checkbox inline" data-name="游戏" data-remark="">
                             <input type="checkbox" value="6">游戏
                         </label>
+<!--2016-03-21修改增加频道按增加顺序排序-->
                         <hr>
                         <ul class=" ui-sortable show_checked "></ul>
+<!--2016-03-21修改增加频道按增加顺序排序-end-->
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -661,8 +665,9 @@
             $('#channelList').delegate('.channel_item .remove','click',function(){
                 $(this).parent('li').remove();
             });
-
-            $('#channel_items .show_checked').sortable();
+/*2016-03-21修改增加频道按增加顺序排序*/
+			$('#channel_items .show_checked').sortable();
+/*2016-03-21修改增加频道按增加顺序排序-end*/
             /*
             * 百分比自动控制
             * 百分比总和超过100时自动从第一个里面扣减，到0停止
@@ -714,8 +719,6 @@
                     $(this).siblings('input[name=contentInterval]').css('visibility','hidden');
                 }
             });
-
-
             //弹窗前初始化多选框
             $('#channel_items').on('show.bs.modal', function (index,ele) {
                 $('#channel_items input').removeAttr('checked')
@@ -723,6 +726,7 @@
                     var value = $(this).attr('data-value');
                     $('#channel_items input[type="checkbox"][value="'+value+'"]').attr('checked','true');
                 });
+/*2016-03-21修改增加频道按增加顺序排序*/
                 $('#channel_items .show_checked').html($('#channelList').html());
             });
 
@@ -747,6 +751,7 @@
             $('#btn_channel_items_ok').bind('click',function(){
                 
                 $('#channelList').html($('#channel_items .show_checked').html());
+/*2016-03-21修改增加频道按增加顺序排序-end*/
                 $('#channel_items').modal('hide');
             });
             $('#msg .close').click(function(){
@@ -758,13 +763,8 @@
                     contentDivIndex--;   
                 }
                 $(this).parents('.cnt_item_div').remove();
-
-
                 resetIndex();
             });
-
-
-
             $('#contentDiv').delegate('button[name=btn_addContent]','click',function(){
                var _p = $(this).parents('.cnt_item_div');
                 if(_p.find('.controls-row').length==contentItemCount){
