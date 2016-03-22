@@ -7,13 +7,15 @@
 		this.lastScrollY;
 		this.scrolled;
 		this.ele=ele;
+		this.parent_ele=this.ele.parentNode;
+
 		this.init();
 	};
 	Headroom.prototype={
 		// 获取当前y
 		setClass:function(){
 			if(this.scrolled>0){
-				console.log(this,this.ele);
+				// console.log(this,this.ele);
 				
 				this.ele.className="headroom headroom--unpinned";
 			}
@@ -21,7 +23,8 @@
 				this.ele.className="headroom headroom--pinned";
 			}
 		},
-		update:function(){
+		update:function(e){
+			console.log(e.target);
 			this.scrollY=window.pageYOffset;
 			// this.getScrollY();
 			this.scrolled=this.scrollY-this.lastScrollY;
@@ -31,7 +34,8 @@
 			this.setClass();
 		},
 		init:function(){
-			// this.update();
+			console.log(this.parent_ele)
+			this.parent_ele
 			window.addEventListener("scroll",this.update.bind(this));
 		},
 		getScrollY:function(){
