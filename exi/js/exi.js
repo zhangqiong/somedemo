@@ -3,6 +3,8 @@ $(document).ready(function(){
 	// alert("loaded");
        $('#urls').load("images/titleAfter-original.json",function(){
               infos=JSON.parse($('#urls').text()) ;
+              infos.reverse();
+
               $(window).resize(arrange);
               loadImg(30);
        });
@@ -62,7 +64,6 @@ function arrange(){
 }
 function loadImg(sum_once){
        var length=infos.length,i,htmlTxt="";
-       infos.reverse();
        if(show_count>=length){
               // alert("没有了");
               $('.loading').html('没有啦');
