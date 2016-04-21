@@ -18,6 +18,7 @@
     <style>
         body{
             background: none;
+            padding: 10px;
         }
     </style>
     <link rel="stylesheet" href="css/custome.css">
@@ -25,12 +26,24 @@
 </head>
 <body>
 	<ul id="pages" class="nav nav-tabs">
-		
+		<li id="addPage" role="presentation"><a href="#">+增加子屏</a></li>
 	</ul>
 
 	<div id="contentDiv" class="ui-sortable">
 		
 	</div>
+    <div class="addNewCnt">+ 点击增加内容</div>
+    <input type="hidden" placeholder="内容源格子数" id="lattice_num" name="lattice_num" required="true" value="" />
+    <hr />
+    <input type="hidden" name="submit" value="1" class="input-xlarge" required="true">
+    <div id="msg" class="hide">
+        <button type="button" class="close">×</button>
+        <strong>Warning!</strong> <span></span>
+    </div>
+    <div class="btn-toolbar">
+        <button type="button" id="btn_submit" class="btn btn-primary"><strong>提交</strong></button>
+        <div class="btn-group"></div>
+    </div>
 	<script src="js/custome.js"></script>
 </body>
 </html>

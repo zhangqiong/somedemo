@@ -15,6 +15,14 @@
             "priority_credits": "10000", 
             "is_interval": "0", 
             "content_desc": null
+        },
+        "3": {
+            "id": "3", 
+            "content_name": "O2O", 
+            "status": "1", 
+            "priority_credits": "10000", 
+            "is_interval": "1", 
+            "content_desc": null
         }
     }, 
     "template_info_list": [
@@ -391,7 +399,7 @@
         "1": {
             "id": "1", 
             "status": "1", 
-            "is_top": "1", 
+            "is_top": "0", 
             "screen_no": "1", 
             "template_no": "1", 
             "render_type": "100", 
@@ -497,6 +505,30 @@
             "source_from": "WiFi万能钥匙", 
             "img_count": "0", 
             "img_url1": null, 
+            "img_url2": null, 
+            "img_url3": null, 
+            "content_url": "http://www.baidu.com", 
+            "read_init": "3", 
+            "read_incr": "2", 
+            "read_max": "3", 
+            "create_user": "刘成杰", 
+            "create_time": "2016-03-08 11:37:25", 
+            "update_user": "刘成杰", 
+            "update_time": "2016-03-08 11:41:00"
+        }, 
+        "15": {
+            "id": "15", 
+            "status": "1", 
+            "is_top": "0", 
+            "screen_no": "1", 
+            "template_no": "4", 
+            "render_type": "106", 
+            "content_title": "1-4", 
+            "tag_text": "123", 
+            "tag_template_id": "4", 
+            "source_from": "WiFi万能钥匙", 
+            "img_count": "0", 
+            "img_url1": "/upload/custom/201603/90b724be39a7116786587d0a35c5f6801.jpg", 
             "img_url2": null, 
             "img_url3": null, 
             "content_url": "http://www.baidu.com", 
@@ -727,6 +759,20 @@
     }, 
     "id": "22", 
     "item_list": {
+        "0":[
+            {
+                "id": "1810", 
+                "template_id": "22", 
+                "sort_no": "1", 
+                "content_source_id": "3", 
+                "show_scale": "100", 
+                "is_interval": "0", 
+                "show_interval": null, 
+                "custom_source_id": "21", 
+                "page_no": "1", 
+                "is_default_page": "0"
+            }
+        ], 
         "1": [
             {
                 "id": "1810", 
@@ -746,11 +792,11 @@
                 "id": "1811", 
                 "template_id": "22", 
                 "sort_no": "2", 
-                "content_source_id": "2", 
+                "content_source_id": "3", 
                 "show_scale": "100", 
                 "is_interval": "0", 
                 "show_interval": null, 
-                "custom_source_id": null, 
+                "custom_source_id": "17", 
                 "page_no": "1", 
                 "is_default_page": "0"
             }
@@ -814,11 +860,11 @@
                 "id": "1816", 
                 "template_id": "22", 
                 "sort_no": "6", 
-                "content_source_id": "1", 
+                "content_source_id": "3", 
                 "show_scale": "100", 
                 "is_interval": "0", 
                 "show_interval": null, 
-                "custom_source_id": null, 
+                "custom_source_id": "15", 
                 "page_no": "1", 
                 "is_default_page": "0"
             }
