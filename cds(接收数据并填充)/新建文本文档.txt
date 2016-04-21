@@ -1,0 +1,12 @@
+{
+    "content_source": {//内容源 id对应名称
+        "1": "新闻", 
+        "2": "广告"
+    }, 
+    "template_info_list": [], 所有的模板，模板填充用的
+    "cunstom_list": [], 选择自定义内容填充
+    "cunstom_arr": {}, id对应的自定义内容
+    "id": "22", 模板id新增屏号
+    "item_list": {}, 
+    "page_list": []
+}

@@ -1,0 +1,19 @@
+ul#pages{
+	border:none;
+}
+#pages li{
+	position: relative;
+	border: 1px #ddd solid;
+	margin-left: 0;
+}
+#pages li:not(:first-child){
+	border-left: none;
+}
+#pages li.active{
+	border-bottom: none;
+	margin-left: .5em;
+}
+#pages li a{
+	border:none;
+}
+button.remove{width: 14px; height: 14px; border: none; background: none; position: absolute; top: 0; right: 0; font-size: 14px; line-height: 14px; padding: 0; background-color: #CCCCCC;}

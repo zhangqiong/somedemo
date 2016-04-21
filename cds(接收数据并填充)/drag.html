@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>drag and drop</title>
+<style>
+body{font-size:84%;}
+.dustbin{width:100px; height:260px; line-height:1.4; background-color:gray; font-size:36px; font-family:"微软雅黑", "Yahei Mono"; text-align:center; text-shadow:-1px -1px #bbb; float:left;}
+.dragbox{width:500px; padding-left:20px; float:left;}
+.draglist{padding:10px; margin-bottom:5px; border:2px dashed #ccc; background-color:#eee; cursor:move;}
+.draglist:hover{border-color:#cad5eb; background-color:#f0f3f9;}
+.dragremind{padding-top:2em; clear:both;}
+</style>
+</head>
+
+<body>
+<div class="dustbin"><br />垃<br />圾<br />箱</div>
+<div class="dragbox">
+    <div class="draglist" title="拖拽我" data-index="1"><p draggable="true">列表1</p></div>
+    <div class="draglist" title="拖拽我" data-index="2"><p draggable="true">列表2</p></div>
+    <div class="draglist" title="拖拽我" data-index="3"><p draggable="true">列表3</p></div>
+    <div class="draglist" title="拖拽我" data-index="4"><p draggable="true">列表4</p></div>
+    <div class="draglist" title="拖拽我" data-index="5"><p draggable="true">列表5</p></div>
+    <div class="draglist" title="拖拽我" data-index="6"><p draggable="true">列表6</p></div>
+</div>
+<div class="dragremind"></div>
+<script src="jquery-1.8.1.min.js"></script>
+<script>
+$(function(){
+    var eleDrag = null,
+        eleRemind = $(".dragremind");
+    $('.dustbin').bind({
+        'dragover' : function(ev) {
+            ev.preventDefault();
+            return true;
+        },
+        'dragenter' : function(ev) {
+            this.style.color = "#ffffff";
+            return true;
+        },
+        'drop' : function(ev) {
+            if (eleDrag) {
+                eleRemind.html('<strong>"' + eleDrag.innerHTML + '"</strong>被扔进了垃圾箱');
+                eleDrag.parentNode.removeChild(eleDrag);
+            }
+            this.style.color = "#000000";
+            return false;
+        }
+    });
+    
+});
+
+</script>
+</body>
+</html>
