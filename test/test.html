@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+function print(s){
+    console.log((s));
+}
+var s,t,sx,sy,tx,ty,i,j,xx,yy,count= 0,cou= 0,xie_c;
+//s=read_line();
+//t=read_line();
+s="a8"
+t="h1"
+
+
+sx=parseInt(s[0].charCodeAt(0));
+sy=parseInt(s[1].charCodeAt(0));
+tx=parseInt(t[0].charCodeAt(0));
+ty=parseInt(t[1].charCodeAt(0));
+
+
+x=tx-sx;
+y=ty-sy;
+xx=Math.abs(x);
+yy=Math.abs(y);
+print(Math.max(xx,yy));
+
+xie_c=Math.min(xx,yy);
+if(x>0){
+    if(y<0){
+        for(i=0;i<xie_c;i++){
+            print("RD");
+        }
+    }else{
+        for(i=0;i<xie_c;i++){
+            print("RU");
+        }
+    }
+}else{
+    if(y<0){
+        for(i=0;i<xie_c;i++){
+            print("LD");
+        }
+    }else{
+        for(i=0;i<xie_c;i++){
+            print("LU");
+        }
+    }
+}
+if(xx-xie_c){
+    if(x>0){
+        for(j=0;j<xx-xie_c;j++){
+            print("R");
+        }
+    }else{
+        for(j=0;j<xx-xie_c;j++){
+            print("L");
+        }
+    }
+}else if(yy-xie_c){
+    if(y>0){
+        for(j=0;j<yy-xie_c;j++){
+            print("D");
+        }
+    }else{
+        for(j=0;j<yy-xie_c;j++){
+            print("U");
+        }
+    }
+}
+</script>
+</body>
+</html>

@@ -7777,7 +7777,7 @@ function Animation( elem, properties, options ) {
 			originalOptions: options,
 			startTime: fxNow || createFxNow(),
 			duration: options.duration,
-			tweens: [],
+			 tweens: [],
 			createTween: function( prop, end ) {
 				var tween = jQuery.Tween( elem, animation.opts, prop, end,
 						animation.opts.specialEasing[ prop ] || animation.opts.easing );

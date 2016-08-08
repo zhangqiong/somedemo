@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/vali.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/vali.js"></script>
+    <style type="text/css">
+        input{
+            margin: 2em;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+    <form class="form">
+        email:<input type="text" email="t" vali><br>
+        phone:<input type="text" phone="t" vali><br>
+        max5 && min2:<input type="text" max="5" min="2" vali><br>
+        bank;<input type="text" bank="t" vali><br>
+        只有字母、数字、下划线:<input type="text" only="1,_,2" vali><br>
+        必须字母、数字、下划线:<input type="text" must="1,_,2" vali><br>
+        首位必须是字母,不能是数字:<input type="text" first_must="1" first_cannot="2" vali><br>
+        equally验证：<br>
+        <input type="text" id="qq" value="1029131145"><br>
+        <input type="text" equally="#qq" vali><br>
+    </form>
+</div>
+
+<script>
+    $(".form").vali();
+</script>
+</body>
+</html>
